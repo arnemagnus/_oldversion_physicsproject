@@ -11,6 +11,8 @@
 #                 Added spaces (whitespace) everywhere slopes are 
 #                 estimated, in order to make the differences between
 #                 the various methods more apparent.
+#     2017-08-30: Clarified the function signature for the derivative
+#                 functions.
 
 # Written by Arne M. T. Løken as part of a specialization
 # project in physics at NTNU, fall 2017.                
@@ -22,7 +24,8 @@
 def euler(x, # Coordinates, as an array
           t, # Current time
           h, # Time step
-          f  # Function handle for the derivatives (RHS)
+          f  # Function handle for the derivatives (RHS),
+             # function signature: f = f(x, t)
          ):
    # This function performs a single time step forwards, using the 
    # explicit Euler scheme, and returns the new coordinates at the
@@ -43,6 +46,7 @@ def rk2(x, # Coordinates, as an array
         t, # Current time
         h, # Time step,
         f  # Function handle for the derivatives (RHS)
+           # function signature: f = f(x, t)
        ):
    # This function performs a single time step forwards, using the
    # Heun scheme, and returns the new coordinates at the new time 
@@ -65,6 +69,7 @@ def rk3(x, # Coordinates, as an array
         t, # Current time
         h, # Time step,
         f  # Function handle for the derivatives (RHS)
+           # function signature: f = f(x, t)
        ):
    # This function performs a single time step forwards, using the
    # Kutta scheme, and returns the new coordinates at the new time
@@ -88,6 +93,7 @@ def rk4(x, # Coordinates, as an array
         t, # Current time
         h, # Time step,
         f  # Function handle for the derivatives (RHS)
+           # function signature: f = f(x, t)        
        ):
    # This function performs a single time step forwards, using the
    # RK4 scheme, and returns the new coordinates at the new time
