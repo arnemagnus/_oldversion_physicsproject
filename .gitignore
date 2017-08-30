@@ -1,0 +1,9 @@
+# Changelog:
+#     2017-08-30: Added *.pyc (python byte code)
+#                       *~ (emacs temporary files / cache files)
+#                       __pycache__/ (python cache folder)
+#                 to the blacklist
+
+__pycache__/
+*.pyc
+*~
