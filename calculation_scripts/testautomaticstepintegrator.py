@@ -42,10 +42,10 @@ def f(t, x):
     # Derivative of arctan function
     return 1/(1 + t*t)
 
-# # Get trajectory, using rk4 method
-# Ts, Xs = get_trajectory(f,rk4,t_max=30,h0=0.1,x0=0,t0=0)
-# print('Rk4 steps: {}'.format(len(Ts)))
-# plt.plot(Ts,Xs,'g-o', label = 'Euler solution')
+# Get trajectory, using Bogacki-Shampine method
+Ts, Xs = get_trajectory(f,bs5,t_max=30,h0=0.1,x0=0,t0=0)
+print('BS5 steps: {}'.format(len(Ts)))
+plt.plot(Ts,Xs,'g-o', label = 'Bogacki-Shampine solution')
 # Get trajectory, using Fehlberg method
 Ts, Xs = get_trajectory(f,rkf,t_max=30,h0=1e-2,x0=0,t0=0)
 print('Fehlberg steps: {}'.format(len(Ts)))
