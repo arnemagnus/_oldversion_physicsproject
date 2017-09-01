@@ -6,6 +6,9 @@
 #                 Attempts to speed up the calculations by use of 
 #                 numba have, as of yet, not resulted in significant
 #                 speedup, if at all.
+#     2017-09-01: Changed function calls to the numerical integrator,
+#                 in accordance with the recent change in function call
+#                 signature [f(x,t) --> f(t,x)]
 
 # Written by Arne M. T. Løken as part of a specialization project in 
 # physics at NTNU, fall 2017.
@@ -128,11 +131,11 @@ plt.figure()
 @jit
 def timestep(xy,yx,lyap,t,h,deriv,integrator):
    global left_offset, right_offset, top_offset, bottom_offset
-   xy, yx = integrator(np.array([xy, yx]),
-                t,
-                h,
-                deriv
-               )
+   xy, yx = integrator(t,
+                       np.array([xy, yx]),
+                       h,
+                       deriv
+                      )
    left_offset[1:-2,1:-2] = np.sqrt((xy[0:-3,1:-2]-xy[1:-2,1:-2])**2
                                     +(yx[0:-3,1:-2]-yx[1:-2,1:-2])**2)
    right_offset[1:-2,1:-2] = np.sqrt((xy[2:-1,1:-2]-xy[1:-2,1:-2])**2
