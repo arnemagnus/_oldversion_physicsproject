@@ -321,8 +321,8 @@ def dopri(t,           # Current time
    # The method is 4th order, with 5th (6th) order correction, hence:
    q = 4.
    
-   sc = atol + np.maximum(np.abs(x_5), np.abs(x_6)) * rtol
-   err = np.amax(np.sqrt((x_5-x_6)**2)/sc)
+   sc = atol + np.maximum(np.abs(x_4), np.abs(x_5)) * rtol
+   err = np.amax(np.sqrt((x_4-x_5)**2)/sc)
 
    # Safety factor for timestep correction
    fac = 0.8
