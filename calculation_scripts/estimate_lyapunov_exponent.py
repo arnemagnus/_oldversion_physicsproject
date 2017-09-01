@@ -54,7 +54,7 @@ tmin, tmax = 0, 5
 
 # We must define the timestep to be used in the transport calculation:
 
-h = 0.01
+h = 0.1
 
 # Let's define the domain of the velocity field:
 
@@ -65,7 +65,7 @@ ymin, ymax = 0, 1
 # in either directions will be codependent. I choose the number of
 # grid points in the x-direction to be the dependent variable. Hence:
 
-Ny = 101
+Ny = 201
 Nx = 1 + int(np.floor(Ny-1)*(xmax-xmin)/(ymax-ymin))
 
 # With the above definition, we will get a quadratic grid.
@@ -74,6 +74,9 @@ Nx = 1 + int(np.floor(Ny-1)*(xmax-xmin)/(ymax-ymin))
 # For this purpose, I choose to use meshgrids:
 
 xy, yx = np.meshgrid(np.linspace(xmin,xmax,Nx), np.linspace(ymin,ymax,Ny))
+
+x0 = np.copy(xy)
+y0 = np.copy(yx)
 
 # To begin with, we're interested in finding the FTLE, so finding 
 # an estimate at each time instance seems like a reasonable approach.
@@ -128,10 +131,9 @@ plt.figure()
 # To avoid an if statement inside the upcoming timestep loop, we 
 # make an interated loop instead. That is, the outer loop sets the
 # limits for the inner loop, as follows:
-@jit
 def timestep(xy,yx,lyap,t,h,deriv,integrator):
    global left_offset, right_offset, top_offset, bottom_offset
-   xy, yx = integrator(t,
+   _,(xy, yx),_ = integrator(t,
                        np.array([xy, yx]),
                        h,
                        deriv
@@ -159,8 +161,9 @@ integrator = euler
 for i in range(int(n_steps/n_tenth)):
    for j in range(n_tenth):
       xy, yx, lyap = timestep(xy, yx, lyap, (i*n_tenth+j)*h,h,vel,integrator=integrator)
-   plt.pcolormesh(xy,yx,lyap,cmap='RdBu_r')
+   plt.pcolormesh(x0,y0,lyap,cmap='RdBu_r')
    plt.colorbar()
    plt.title(r'$t=$ {}'.format(tmin+(i*n_tenth+j)*h))
    plt.savefig('figure_debug/lyapunov_{}_t={}.png'.format(integrator,tmin+(i*n_tenth+j)*h))
    plt.clf()
+   np.savetxt('out{}.txt'.format((tmin+i)),lyap.T)
