@@ -12,6 +12,8 @@
 #                 purpose numerical integration schemes, rather than
 #                 explicitly coding the numerical integrators every
 #                 time they are used.
+#     2017-09-01: Changed the function call signature, from f(x,t) to
+#                 f(t,x), in accordance with the literature.
 
 # Written by Arne M. T. Løken as part of a specialization project in
 # physics at NTNU, fall 2017
@@ -37,10 +39,10 @@ def _a(t,eps,w):
 def _b(t,eps,w):
     return 1 - 2*eps*np.sin(w*t)
 
-def _f(x,t,eps,w):
+def _f(t,x,eps,w):
     return _a(t,eps,w) * x**2 + _b(t,eps,w) * x
 
-def _dfdx(x,t,eps,w):
+def _dfdx(t,x,eps,w):
     return 2 * _a(t,eps,w) * x + _b(t,eps,w)
 
 # The velocity field makes use of the above function definitions.
@@ -49,7 +51,7 @@ def _dfdx(x,t,eps,w):
 # use the same parameter values. The velocity field is implemented
 # as follows:
 
-def vel(x,t,A=None,eps=None,w=None):
+def vel(t,x,A=None,eps=None,w=None):
    if A == None:
       A = 0.1
    if eps == None:
@@ -59,9 +61,9 @@ def vel(x,t,A=None,eps=None,w=None):
 
    x, y = x[0], x[1]   
 
-   vx = -np.pi*A * np.sin(np.pi*_f(x,t,eps,w)) * np.cos(np.pi*y)
-   vy = (np.pi*A * np.cos(np.pi*_f(x,t,eps,w)) * np.sin(np.pi*y)
-                               *_dfdx(x,t,eps,w)
+   vx = -np.pi*A * np.sin(np.pi*_f(t,x,eps,w)) * np.cos(np.pi*y)
+   vy = (np.pi*A * np.cos(np.pi*_f(t,x,eps,w)) * np.sin(np.pi*y)
+                               *_dfdx(t,x,eps,w)
         )
 
    return np.array([vx, vy])
