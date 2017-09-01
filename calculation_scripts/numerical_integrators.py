@@ -237,7 +237,7 @@ def rkf(t,           # Current time
    return _t, _x, _h
 
 
-# The Dormand-Prince method (4th order method with 5th and 6th order
+# The Dormand-Prince method (4th order method with 5th (6th) order
 #                            correction, adaptive timestep)
 def dopri(t,           # Current time
           x,           # Coordinates, as an array
@@ -309,16 +309,16 @@ def dopri(t,           # Current time
    k6 = f(t + c6*h, x + a51*h*k1 + a52*h*k2 + a53*h*k3 + a54*h*k4 + a55*h*k5           )
    k7 = f(t + c7*h, x + a61*h*k1 + a62*h*k2 + a63*h*k3 + a64*h*k4 + a65*h*k5 + a66*h*k6)
 
-   # Find fifth and sixth order prediction of new point
-   x_5 = x + h*(b51*k1 + b52*k2 + b53*k3 + b54*k4 + b55*k5 + b56*k6 + b57*k7)
-   x_6 = x + h*(b61*k1 + b62*k2 + b63*k3 + b64*k4 + b65*k5 + b66*k6 + b67*k7)
+   # Find fourth and fifth order prediction of new point
+   x_4 = x + h*(b51*k1 + b52*k2 + b53*k3 + b54*k4 + b55*k5 + b56*k6 + b57*k7)
+   x_5 = x + h*(b61*k1 + b62*k2 + b63*k3 + b64*k4 + b65*k5 + b66*k6 + b67*k7)
 
    # Implementing error check and variable stepsize roughly as in
    # Hairer, Nørsett and Wanner: "Solving ordinary differential
    #                              equations I -- Nonstiff problems",
    #                              pages 167 and 168 in the 2008 ed.
 
-   # The method is 4th order, with 5th and 6th order corrections, hence:
+   # The method is 4th order, with 5th (6th) order correction, hence:
    q = 4.
    
    sc = atol + np.maximum(np.abs(x_5), np.abs(x_6)) * rtol
@@ -328,8 +328,8 @@ def dopri(t,           # Current time
    fac = 0.8
    maxfac = 2
    if err <= 1.:
-       # Step is accepted, use fifth order result as next position
-       _x = x_5
+       # Step is accepted, use fourth order result as next position
+       _x = x_4
        _t = t + h
        # Refining h:
        # Should err happen to be 0, the optimal h is infinity.
