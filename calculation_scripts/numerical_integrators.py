@@ -11,17 +11,21 @@
 #                 Added spaces (whitespace) everywhere slopes are 
 #                 estimated, in order to make the differences between
 #                 the various methods more apparent.
+#
 #     2017-08-30: Clarified the function signature for the derivative
 #                 functions.
+#
 #     2017-09-01: Changed function signature of the integrators as
 #                 well as the derivative functions, from
 #                 f(x,t) --> f(t,x) in accordance with the literature.
+#
 #                 Added implementation of the Cash-Karp, Fehlberg and
 #                 Dormand-Prince automatic step size integrators.
 #                 Changed return variables of the fixed-stepsize 
 #                 integrators, so that they are consistent with
 #                 the return variables from their automatic stepsize
 #                 siblings.
+#
 #                 Added a not fully functioning implementation
 #                 of the Bogacki-Shampine 4(5) scheme.
 
