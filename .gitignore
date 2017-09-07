@@ -9,8 +9,8 @@
 #                                             *.bbl
 #                                             *.blg
 #                                             *.out
-#
-#                 as well as Emacs config files *.el
+#                 Emacs config files *.el
+#                 and Emacs LaTeX preview temporary folder _region_.prv/
 #                 to the blacklist
 
 # Python temporary files
@@ -28,3 +28,6 @@ __pycache__/
 *.bbl
 *.blg
 *.out
+
+# Emacs LaTeX preview folder
+_region_.prv/
