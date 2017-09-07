@@ -3,13 +3,24 @@
 #                       *~ (emacs temporary files / cache files)
 #                       __pycache__/ (python cache folder)
 #                 to the blacklist
+#
+#     2017-09-07: Added LaTex auxillary files *.log
+#                                             *.aux
+#                                             *.bbl
+#                                             *.blg
+#                                             *.out
+#
+#                 as well as Emacs config files *.el
+#                 to the blacklist
 
 __pycache__/
 *.pyc
 *~
-.log
-.el
-.aux
-.bbl
-.blg
-.out
+
+## 
+*.log
+*.el
+*.aux
+*.bbl
+*.blg
+*.out
