@@ -42,18 +42,24 @@ def f(t, x):
     # Derivative of arctan function
     return 1/(1 + t*t)
 
-# Get trajectory, using Bogacki-Shampine method
-Ts, Xs = get_trajectory(f,bs5,t_max=30,h0=0.1,x0=0,t0=0)
-print('BS5 steps: {}'.format(len(Ts)))
-plt.plot(Ts,Xs,'g-o', label = 'Bogacki-Shampine solution')
+# Get trajectory, using Bogacki-Shampine methods
+Ts, Xs = get_trajectory(f,bs45,t_max=30,h0=0.1,x0=0,t0=0)
+print('BS45 steps: {}'.format(len(Ts)))
+plt.plot(Ts,Xs,'g-o', label = 'Bogacki-Shampine 4(5) solution')
+Ts, Xs = get_trajectory(f,bs23,t_max=30,h0=0.1,x0=0,t0=0)
+print('BS23 steps: {}'.format(len(Ts)))
+plt.plot(Ts,Xs,'m-x', label = 'Bogacki-Shampine 2(3) solution')
 # Get trajectory, using Fehlberg method
 Ts, Xs = get_trajectory(f,rkf,t_max=30,h0=1e-2,x0=0,t0=0)
 print('Fehlberg steps: {}'.format(len(Ts)))
 plt.plot(Ts,Xs, 'r.', label='Fehlberg solution')
-# Get trajectory, using Dormand-Prince method
-Ts, Xs = get_trajectory(f,dopri,t_max=30,h0=1e-2,x0=0,t0=0)
-print('Dormand-Prince steps: {}'.format(len(Ts)))
-plt.plot(Ts, Xs, 'bo', label='Dormand-Prince solution')
+# Get trajectory, using Dormand-Prince methods
+Ts, Xs = get_trajectory(f,dopri45,t_max=30,h0=1e-2,x0=0,t0=0)
+print('Dormand-Prince 5(4) steps: {}'.format(len(Ts)))
+plt.plot(Ts, Xs, 'bo', label='Dormand-Prince 5(4) solution')
+Ts, Xs = get_trajectory(f,dopri78,t_max=30,h0=1e-2,x0=0,t0=0)
+print('Dormand-Prince 8(7) steps: {}'.format(len(Ts)))
+plt.plot(Ts, Xs, 'cx', label='Dormand-Prince 8(7) solution')
 # Get trajectory, using Cash-Karp method
 Ts, Xs = get_trajectory(f, cash_karp,t_max=30,h0=1e-2,x0=0,t0=0)
 print('Cash-Karp steps: {}'.format(len(Ts)))
