@@ -7,3 +7,9 @@
 __pycache__/
 *.pyc
 *~
+.log
+.el
+.aux
+.bbl
+.blg
+.out
