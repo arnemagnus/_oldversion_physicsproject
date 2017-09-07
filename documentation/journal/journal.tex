@@ -1,0 +1,74 @@
+\documentclass[a4paper,12pt]{article}
+
+% For å laste inn fonter:
+\usepackage{fontspec}
+% Diverse formatering, deriblant (men ikke begrenset til) URL'er
+\usepackage{xunicode,xltxtra,url,parskip}
+
+\RequirePackage{color,graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+% Bedre A4-formatering:
+\usepackage[big]{layaureo}
+
+% Oppsett av hyperref-pakken
+\usepackage{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,
+  linkcolor=linkcolour}
+
+% Runde sitatparenteser med \citep
+\usepackage[round]{natbib}
+
+% For å bl.a. kunne loope over filnavn:
+\usepackage{tikz}
+
+%--------------------------------------------------%
+% Matematiske funksjoner, og egendefinerte makroer %
+% -------------------------------------------------%
+
+% "Go-to"-pakken for matematikk i LaTeX:
+\usepackage{amsmath}
+
+% Matematiske symboler med fet skrift
+\usepackage{bm}
+
+\newcommand{\vect}[1]{{\bm{\mathrm{#1}}}}
+%---------------------------BEGIN DOCUMENT---------------------------%
+
+\begin{document}
+
+
+%-------------------------------TITLE--------------------------------%
+
+\par{\centering
+    {\LARGE TFY4510 \textsc{Specialization Project in Physics}
+    }\medskip\par}
+
+\par{\centering
+    {\large Journal, courtesy of Arne Magnus Tveita Løken
+    }\bigskip\par}
+
+%----------------------------MAIN CONTENT-----------------------------%
+
+% Organiserer journalføringen i enkeltfiler i underkatalogen
+% 'entries', og laster filene sekvensielt.
+%
+% OBS: Husk å oppdatere antallet inputfiler før kompilering for 
+% å få med alle journalføringene: 
+
+\foreach \c in {1, ..., 1} {\input{entries/entry\c.tex}}
+  
+%------------------------------BACKMATTER-----------------------------%
+\bigskip
+
+\bibliographystyle{apalike}
+\bibliography{mybibliography}
+
+\end{document}
+
+
+% Local Variables:
+% TeX-engine: luatex
+% TeX-master: t
+% End:
+

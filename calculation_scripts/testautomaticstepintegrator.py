@@ -54,6 +54,10 @@ plt.plot(Ts,Xs, 'r.', label='Fehlberg solution')
 Ts, Xs = get_trajectory(f,dopri,t_max=30,h0=1e-2,x0=0,t0=0)
 print('Dormand-Prince steps: {}'.format(len(Ts)))
 plt.plot(Ts, Xs, 'bo', label='Dormand-Prince solution')
+# Get trajectory, using Cash-Karp method
+Ts, Xs = get_trajectory(f, cash_karp,t_max=30,h0=1e-2,x0=0,t0=0)
+print('Cash-Karp steps: {}'.format(len(Ts)))
+plt.plot(Ts, Xs, 'yx', label='Cash-Karp solution')
 plt.plot(Ts, np.arctan(Ts), 'g--', label = 'Analytical solution')
 plt.legend()
 # Plot horizontal asymptote

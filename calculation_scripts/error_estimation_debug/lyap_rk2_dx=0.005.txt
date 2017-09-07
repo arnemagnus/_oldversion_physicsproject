@@ -1,0 +1,181 @@
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 0.5:
+		Average abs. error: 0.00010632344171516734
+		Maximum abs. error: 0.00047894190941555337
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 0.5:
+		Average abs. error: 1.0522138282307877e-06
+		Maximum abs. error: 4.507813654797133e-06
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 0.5:
+		Average abs. error: 1.0518041200672673e-08
+		Maximum abs. error: 4.480246618143724e-08
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 1.0:
+		Average abs. error: 0.00013130625329592303
+		Maximum abs. error: 0.0006598735615916951
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 1.0:
+		Average abs. error: 1.3273950121401142e-06
+		Maximum abs. error: 6.169112862774995e-06
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 1.0:
+		Average abs. error: 1.3289733731624178e-08
+		Maximum abs. error: 6.206326963464903e-08
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 1.5:
+		Average abs. error: 0.0001420452149368157
+		Maximum abs. error: 0.0009040518262919406
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 1.5:
+		Average abs. error: 1.4380155139746955e-06
+		Maximum abs. error: 9.208165042462468e-06
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 1.5:
+		Average abs. error: 1.4399623940229955e-08
+		Maximum abs. error: 9.223925279133738e-08
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 2.0:
+		Average abs. error: 0.00013174777618036858
+		Maximum abs. error: 0.0013468374335040556
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 2.0:
+		Average abs. error: 1.3472174983805551e-06
+		Maximum abs. error: 1.391529130867486e-05
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 2.0:
+		Average abs. error: 1.350414638240491e-08
+		Maximum abs. error: 1.395694620986987e-07
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 2.5:
+		Average abs. error: 0.00012054252158093289
+		Maximum abs. error: 0.0016614041445354166
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 2.5:
+		Average abs. error: 1.249724797934423e-06
+		Maximum abs. error: 1.7273480547252973e-05
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 2.5:
+		Average abs. error: 1.254685549981569e-08
+		Maximum abs. error: 1.733479897403356e-07
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 3.0:
+		Average abs. error: 0.00011599887492129725
+		Maximum abs. error: 0.0018383065279834465
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 3.0:
+		Average abs. error: 1.1919979379551355e-06
+		Maximum abs. error: 1.9204077488454985e-05
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 3.0:
+		Average abs. error: 1.1957959617398143e-08
+		Maximum abs. error: 1.9276538815171662e-07
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 3.5:
+		Average abs. error: 0.00011347696409707848
+		Maximum abs. error: 0.002189667911214721
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 3.5:
+		Average abs. error: 1.1587345730003619e-06
+		Maximum abs. error: 2.095700736964856e-05
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 3.5:
+		Average abs. error: 1.1614120356981327e-08
+		Maximum abs. error: 2.0868258465700507e-07
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 4.0:
+		Average abs. error: 0.00011206878516781383
+		Maximum abs. error: 0.003765995680109435
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 4.0:
+		Average abs. error: 1.1450353591009073e-06
+		Maximum abs. error: 3.586046865877712e-05
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 4.0:
+		Average abs. error: 1.147796851778945e-08
+		Maximum abs. error: 3.5637275053179707e-07
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 4.5:
+		Average abs. error: 0.00011600288777462468
+		Maximum abs. error: 0.004261858018779374
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 4.5:
+		Average abs. error: 1.1877590119240703e-06
+		Maximum abs. error: 4.126069965054713e-05
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 4.5:
+		Average abs. error: 1.1909058236261644e-08
+		Maximum abs. error: 4.101808446788091e-07
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.1 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 5.0:
+		Average abs. error: 0.00011996618291635251
+		Maximum abs. error: 0.0049094995847898115
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.01 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 5.0:
+		Average abs. error: 1.2304161892984358e-06
+		Maximum abs. error: 4.585062837680898e-05
+
+----------------------------------------------------------------------------------------------------
+
+Error of rk2 with dt = 0.001 with rk4 solution for dt = 0.001 as reference, dx = 0.005, at t = 5.0:
+		Average abs. error: 1.2338669861150077e-08
+		Maximum abs. error: 4.5718457963861425e-07
+
+----------------------------------------------------------------------------------------------------
+
+

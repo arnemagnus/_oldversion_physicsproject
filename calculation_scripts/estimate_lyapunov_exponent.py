@@ -73,11 +73,10 @@ import numpy as np
 # Lyapunov exponent. 
 
 # First, let's define the time interval of interest:
-
 t_min, t_max = 0, 5
 
 # We need to define the timestep for the transport calculation:
-h = 0.01
+h = 0.1
 
 # In the event that we want to use adaptive timestep integrators,
 # or, as is the case in the current edition of the program, we
@@ -88,14 +87,12 @@ h = 0.01
 h_ref = np.copy(h)
 
 # Let's define the domain of the velocity field:
-
 xmin, xmax = 0, 2
 ymin, ymax = 0, 1
 
 # Seeing as we desire a quadratic grid, the number of grid points
 # in either directions will be codependent. I choose the number of
 # grid points in the x-direction to be the dependent variable. Hence:
-
 Ny = 201
 Nx = 1 + int(np.floor(Ny-1)*(xmax-xmin)/(ymax-ymin))
 
@@ -141,7 +138,6 @@ top_offset = np.ones(xy.shape)
 bottom_offset = np.ones(xy.shape)
 
 # We also preallocate a container for the FTLE estimate:
-
 lyap = np.zeros(xy.shape)
 
 # Now, we step forward in time. At each time instant, we must find the
@@ -230,15 +226,11 @@ def timestep(t,            # Current time level
    return t, xy, yx, h, lyap
 
 
-plt.figure()
-
-integrator = euler
-
 # We need a container for the current simulation time:
 t = t_min
 
 # We need to choose a numerical integrator:
-integrator = rk4
+integrator = rk3
 
 # Lastly, we need a canvas:
 plt.figure()
@@ -293,11 +285,17 @@ for i in range(n_snaps):
     # We clear the canvas, preparing for the next snapshot:
     plt.clf()
 
-
-
-
-
-
-
-
-
+    # Dump current Lyapunov field to text file, enabling error
+    # estimation wrt. a reference (i.e. higher order) solution;
+    np.savetxt(fname=('datadump_debug/'
+                     + 'lyapunov_{}_t={}_dt={}_dx={}'.format(integrator.__name__,
+                                                             t,
+                                                             h,
+                                                             dx
+                                                            )
+                     +'.txt'
+                    ),
+                X=lyap
+              )
+       
+                      

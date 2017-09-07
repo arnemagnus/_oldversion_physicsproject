@@ -28,7 +28,14 @@
 #
 #                 Added a not fully functioning implementation
 #                 of the Bogacki-Shampine 4(5) scheme.
-
+# 
+#     2017-09-07: Corrected several errors in terms of the matrix
+#                 elements of the Cash-Karp 4(5) scheme. The scheme
+#                 works as intended, now.
+#
+#                 Performed several similar corrections to the
+#                 Bogacki-Shampine scheme, which now works as intended.
+#
 # Written by Arne M. T. Løken as part of a specialization
 # project in physics at NTNU, fall 2017.                
 
@@ -179,20 +186,20 @@ def cash_karp(t,           # Current time
    a55 = 253./4096.
 
    # Fourth-order weights
-   b41 = 37./378.
+   b41 = 2825./27648.
    b42 = 0.
-   b43 = 250./621.
-   b44 = 192./594.
-   b45 = -1./5.
-   b46 = 512./1771.
+   b43 = 18575./48384.
+   b44 = 13525./55296.
+   b45 = 277./14336.
+   b46 = 1./4.
 
    # Fifth-order weights
-   b51 = 2825./27648.
+   b51 = 37./378.
    b52 = 0.
-   b53 = 18575./48384.
-   b54 = 1325./55296.
-   b55 = 277./14336.
-   b56 = 1./4.
+   b53 = 250./621.
+   b54 = 125./594.
+   b55 = 0.
+   b56 = 512./1771.
 
    # Find "slopes"
    k1 = f(t       , x                                                       )
@@ -467,13 +474,13 @@ def dopri(t,           # Current time
 #                  Computers Math. Applic., Vol. 32, no. 6, pp. 15-28
 
 def bs5(t,           # Current time
-          x,           # Coordinates, as an array
-          h,           # Time step
-          f,           # Function handle for the derivatives (RHS),
-                       # function signature: f = f(t, x)
-          atol = 1e-6, # Absolute tolerance level (optional)
-          rtol = 1e-9  # Relative tolerance level (optional)
-         ):
+        x,           # Coordinates, as an array
+        h,           # Time step
+        f,           # Function handle for the derivatives (RHS),
+                     # function signature: f = f(t, x)
+        atol = 1e-6, # Absolute tolerance level (optional)
+        rtol = 1e-9  # Relative tolerance level (optional)
+       ):
    # This function attempts a single time step forwards, using the 
    # Bogacki-Shampine adaptive timestep integrator scheme. If the new
    # step is not accepted, the time and coordinates are not updated.
@@ -493,7 +500,7 @@ def bs5(t,           # Current time
    a22 = 4./27.
    a31 = 183./1372.
    a32 = -162./343.
-   a33 = 1043./1372.
+   a33 = 1053./1372.
    a41 = 68./297.
    a42 = -4./11.
    a43 = 42./143.
@@ -521,7 +528,7 @@ def bs5(t,           # Current time
    b41 = 587./8064.
    b42 = 0.
    b43 = 4440339./15491840.
-   b44 = 24353./124800
+   b44 = 24353./124800.
    b45 = 387./44800.
    b46 = 2152./5985.
    b47 = 7267./94080.
@@ -543,7 +550,7 @@ def bs5(t,           # Current time
    b55 = 43./1440.
    b56 = 2272./6561.
    b57 = 79937./1113912.
-   b58 = -3293./556956.
+   b58 = 3293./556956.
 
    # Find "slopes"
    k1 = f(t       , x                                                                             )
@@ -557,7 +564,7 @@ def bs5(t,           # Current time
 
    # Find fourth and fifth order prediction of new point
    x_4 = x + h*(b41*k1 + b42*k2 + b43*k3 + b44*k4 + b45*k5 + b46*k6 + b47*k7        )
-   _x_4 = x + h*(b41*k1 + _b42*k2 + _b43*k3 + _b44*k4 + _b45*k5 + _b46*k6 + _b47*k7 )
+   _x_4 = x + h*(_b41*k1 + _b42*k2 + _b43*k3 + _b44*k4 + _b45*k5 + _b46*k6 + _b47*k7 )
    x_5 = x + h*(b51*k1 + b52*k2 + b53*k3 + b54*k4 + b55*k5 + b56*k6 + b57*k7 + b58*k8)
 
    # Implementing error check and variable stepsize roughly as in

@@ -1,0 +1,94 @@
+\section{07.09.2017}
+I've spent the first few weeks of the project work studying the
+dynamics, i.e. the transport properties,  of an analytically known
+velocity field, in detail. The velocity field is a simplified
+dynamical model of a periodic, two dimensional double gyre system,
+first described by \citet{shadden2005definition}. It is
+defined on the domain $[0,2]\times[0,1]$, and described mathematically
+by the stream function
+
+\begin{equation}
+  \label{eq:analytical_field_stream_function}
+  \psi(\vect{x},t) = A\sin\big(\pi{}f(x,t)\big)\sin(\pi{}y)
+\end{equation}
+where \addtocounter{equation}{-1}
+
+\begin{subequations}
+  \begin{align}
+    \label{eq:analytical_velocity_field_parameter_f}
+    f(x,t) &= a(t)x^{2} + b(t)x \\
+    \label{eq:analytical_velocity_field_parameter_a}
+    a(t) &= \epsilon \sin(\omega{t}) \\
+    \label{eq:analytical_velocity_field_parameter_b}
+    b(t) &= 1 - 2\epsilon \sin(\omega{}t)
+  \end{align}
+\end{subequations}
+
+and the parameters $A$, $\epsilon$ and $\omega$ adjust the properties
+of the system.
+
+\subsection{Error estimation, various integrators}
+
+\begin{table}[h]
+  \caption{Euler, $t = 5$}
+  \label{tab:euler-lyapunov-error-rk4-ref}
+  \centering
+  \begin{tabular}[h]{l|c|c|c}
+    \hline
+    Euler \textbackslash\hspace{0.5em} $\Delta{t}$& 0.1 & 0.01 & 0.001 \\
+    \hline
+    Avg. abs. err. & $5 \cdot 10^{-3}$ & $4 \cdot 10^{-4} $ & $4 \cdot 10^{-5}$ \\
+    Max. abs. err. & $7 \cdot 10^{-2}$ & $1 \cdot 10^{-2}$ & $1 \cdot 10^{-3} $ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \caption{Heun, $t = 5$}
+  \label{tab:heun-lyapunov-error-rk4-ref}
+  \centering
+  \begin{tabular}[h]{l|c|c|c}
+    \hline
+    Heun \textbackslash\hspace{0.5em} $\Delta{t}$& 0.1 & 0.01 & 0.001 \\
+    \hline
+    Avg. abs. err. & $1 \cdot 10^{-4}$ & $1 \cdot 10^{-6} $ & $1 \cdot 10^{-8}$ \\
+    Max. abs. err. & $5 \cdot 10^{-3}$ & $5 \cdot 10^{-5}$ & $5 \cdot 10^{-7} $ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \caption{Kutta, $t = 5$}
+  \label{tab:kutta-lyapunov-error-rk4-ref}
+  \centering
+  \begin{tabular}[h]{l|c|c|c}
+    \hline
+    Kutta \textbackslash\hspace{0.5em} $\Delta{t}$& 0.1 & 0.01 & 0.001 \\
+    \hline
+    Avg. abs. err. & $4 \cdot 10^{-6}$ & $4 \cdot 10^{-9} $ & $4 \cdot 10^{-12}$ \\
+    Max. abs. err. & $2 \cdot 10^{-4}$ & $2 \cdot 10^{-7}$ & $3 \cdot 10^{-10} $ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \caption{RK4, $t = 5$}
+  \label{tab:RK4-lyapunov-error-rk4-ref}
+  \centering
+  \begin{tabular}[h]{l|c|c}
+    \hline
+    RK4 \textbackslash\hspace{0.5em} $\Delta{t}$& 0.1 & 0.01 \\
+    \hline
+    Avg. abs. err. & $7 \cdot 10^{-8}$ & $7 \cdot 10^{-12} $ \\
+    Max. abs. err. & $4 \cdot 10^{-6}$ & $4 \cdot 10^{-10}$ \\
+    \hline
+  \end{tabular}
+\end{table}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../journal"
+%%% TeX-engine: luatex
+%%% End:
