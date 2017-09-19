@@ -156,14 +156,14 @@ def rk4(t, # Current time
 
 # The Cash-Karp method (5th order method with 4th order
 #                       interpolation, adaptive timestep)
-def cash_karp(t,           # Current time
-              x,           # Coordinates, as an array
-              h,           # Time step
-              f,           # Function handle for the derivatives (RHS),
-                           # function signature: f = f(t, x)
-              atol = 1e-6, # Absolute tolerance level (optional)
-              rtol = 1e-9  # Relative tolerance level (optional)
-             ):
+def rkck(t,           # Current time
+         x,           # Coordinates, as an array
+         h,           # Time step
+         f,           # Function handle for the derivatives (RHS),
+                      # function signature: f = f(t, x)
+         atol = 1e-6, # Absolute tolerance level (optional)
+         rtol = 1e-9  # Relative tolerance level (optional)
+        ):
    # This function attempts a single time step forwards, using the 
    # Cash-Karp adaptive timestep integrator scheme. If the new step is
    # not accepted, the time and coordinates are not updated.
@@ -225,8 +225,8 @@ def cash_karp(t,           # Current time
    #                              equations I -- Nonstiff problems",
    #                              pages 167 and 168 in the 2008 ed.
 
-   # The method is 5th order, with 4th order interpolation, hence:
-   q = 4.
+   # The method is 4th order, with 5th order interpolation, hence:
+   q = 5.
 
    sc = atol + np.maximum(np.abs(x_4), np.abs(x_5)) * rtol
    err = np.amax(np.sqrt((x_4-x_5)**2)/sc)
@@ -235,8 +235,8 @@ def cash_karp(t,           # Current time
    fac = 0.8
    maxfac = 2
    if err <= 1.:
-       # Step is accepted, use fifth order result as next position
-       _x = x_5
+       # Step is accepted, use fourth order result as next position
+       _x = x_4
        _t = t + h
        # Refining h:
        # Should err happen to be 0, the optimal h is infinity.
@@ -256,7 +256,7 @@ def cash_karp(t,           # Current time
    return _t, _x, _h
 
 # The Runge-Kutta-Fehlberg method (also known as the Fehlberg method,
-#                                  5th order method with 4th order
+#                                  4th order method with 5th order
 #                                  interpolation, adaptive timestep)
 def rkf(t,           # Current time
         x,           # Coordinates, as an array
@@ -327,7 +327,7 @@ def rkf(t,           # Current time
    #                              equations I -- Nonstiff problems",
    #                              pages 167 and 168 in the 2008 ed.
 
-   # The method is 5th order, with 4th order interpolation, hence:
+   # The method is 4th order, with 5th order interpolation, hence:
    q = 4.
 
    sc = atol + np.maximum(np.abs(x_4), np.abs(x_5)) * rtol
@@ -337,8 +337,8 @@ def rkf(t,           # Current time
    fac = 0.8
    maxfac = 2
    if err <= 1.:
-       # Step is accepted, use fifth order result as next position
-       _x = x_5
+       # Step is accepted, use fourth order result as next position
+       _x = x_4
        _t = t + h
        # Refining h:
        # Should err happen to be 0, the optimal h is infinity.
@@ -360,14 +360,14 @@ def rkf(t,           # Current time
 
 # "The" Dormand-Prince method (5th order method with 4th order
 #                              interpolation, adaptive timestep)
-def dopri45(t,           # Current time
-            x,           # Coordinates, as an array
-            h,           # Time step
-            f,           # Function handle for the derivatives (RHS),
-                         # function signature: f = f(t, x)
-            atol = 1e-6, # Absolute tolerance level (optional)
-            rtol = 1e-9  # Relative tolerance level (optional)
-           ):
+def rkdp54(t,           # Current time
+           x,           # Coordinates, as an array
+           h,           # Time step
+           f,           # Function handle for the derivatives (RHS),
+                        # function signature: f = f(t, x)
+           atol = 1e-6, # Absolute tolerance level (optional)
+           rtol = 1e-9  # Relative tolerance level (optional)
+          ):
    # This function attempts a single time step forwards, using the 
    # Dormand-Prince adaptive timestep integrator scheme. If the new
    # step is not accepted, the time and coordinates are not updated.
@@ -404,22 +404,22 @@ def dopri45(t,           # Current time
    a76 = 11./84.
 
    # Fourth-order weights
-   b41 = 35./384.
+   b41 = 5179./57600.
    b42 = 0.
-   b43 = 500./1113.
-   b44 = 125./192.
-   b45 = -2187./6784.
-   b46 = 11./84.
-   b47 = 0.
+   b43 = 7571./16695.
+   b44 = 393./640.
+   b45 = -92097./339200.
+   b46 = 187./2100.
+   b47 = 1./40.
 
    # Fifth-order weights
-   b51 = 5179./57600.
+   b51 = 35./384.
    b52 = 0.
-   b53 = 7571./16695.
-   b54 = 393./640.
-   b55 = -92097./339200.
-   b56 = 187./2100.
-   b57 = 1./40.
+   b53 = 500./1113.
+   b54 = 125./192.
+   b55 = -2187./6784.
+   b56 = 11./84.
+   b57 = 0.
 
    # Find "slopes"
    k1 = f(t       , x                                                                  )
@@ -471,7 +471,7 @@ def dopri45(t,           # Current time
 
 # The Dormand-Prince 8(7) method (8th order method with 7th order
 #                                 interpolation, adaptive timestep)
-def dopri78(t,           # Current time
+def rkdp87(t,           # Current time
             x,           # Coordinates, as an array
             h,           # Time step
             f,           # Function handle for the derivatives (RHS),
@@ -665,18 +665,18 @@ def dopri78(t,           # Current time
        _h = fac * h_opt
    return _t, _x, _h
 
-# The (third order) Bogacki-Shampine method (2nd order method with 3rd
+# The (third order) Bogacki-Shampine method (3rd order method with 2nd
 #                                            order interpolation,
 #                                            adaptive timestep)
 
-def bs23(t,           # Current time
-         x,           # Coordinates, as an array
-         h,           # Time step
-         f,           # Function handle for the derivatives (RHS),
-                       # function signature: f = f(t, x)
-         atol = 1e-6, # Absolute tolerance level (optional)
-         rtol = 1e-9  # Relative tolerance level (optional)
-        ):
+def rkbs32(t,           # Current time
+           x,           # Coordinates, as an array
+           h,           # Time step
+           f,           # Function handle for the derivatives (RHS),
+                         # function signature: f = f(t, x)
+           atol = 1e-6, # Absolute tolerance level (optional)
+           rtol = 1e-9  # Relative tolerance level (optional)
+          ):
    # This function attempts a single time step forwards, using the 
    # Bogacki-Shampine 3(2) adaptive timestep integrator scheme. If the
    # new step is not accepted, the time and coordinates are not
@@ -761,14 +761,14 @@ def bs23(t,           # Current time
 #                  "An efficient Runge-Kutta (4,5) pair",
 #                  Computers Math. Applic., Vol. 32, no. 6, pp. 15-28
 
-def bs45(t,           # Current time
-         x,           # Coordinates, as an array
-         h,           # Time step
-         f,           # Function handle for the derivatives (RHS),
-                      # function signature: f = f(t, x)
-         atol = 1e-6, # Absolute tolerance level (optional)
-         rtol = 1e-9  # Relative tolerance level (optional)
-        ):
+def rkbs54(t,           # Current time
+           x,           # Coordinates, as an array
+           h,           # Time step
+           f,           # Function handle for the derivatives (RHS),
+                        # function signature: f = f(t, x)
+           atol = 1e-6, # Absolute tolerance level (optional)
+           rtol = 1e-9  # Relative tolerance level (optional)
+          ):
    # This function attempts a single time step forwards, using the 
    # Bogacki-Shampine 5(4) adaptive timestep integrator scheme. If the 
    # new step is not accepted, the time and coordinates are not
@@ -814,32 +814,34 @@ def bs45(t,           # Current time
    a87 = 7267./94080.
 
    # First of the fourth-order weights
-   b41 = 587./8064.
+   b41 = 6059./80640.
    b42 = 0.
-   b43 = 4440339./15491840.
-   b44 = 24353./124800.
-   b45 = 387./44800.
-   b46 = 2152./5985.
+   b43 = 8559189./30983680.
+   b44 = 26411./124800.
+   b45 = -927./89600.
+   b46 = 443./1197.
    b47 = 7267./94080.
-
+   b48 = 0.
+   
    # Second of the fourth-order weights
-   _b41 = 6059./80640.
+   _b41 = 2479./34992.
    _b42 = 0.
-   _b43 = 8559189./30983680.
-   _b44 = 26411./124800.
-   _b45 = -927./89600.
-   _b46 = 443./1197.
-   _b47 = 7267./94080.
+   _b43 = 123./416.
+   _b44 = 612941./3411720.
+   _b45 = 43./1440.
+   _b46 = 2272./6561.
+   _b47 = 79937./1113912.
+   _b48 = 3293./556956.
 
    # Fifth-order weights
-   b51 = 2479./34992.
+   b51 = 587./8064.
    b52 = 0.
-   b53 = 123./416.
-   b54 = 612941./3411720.
-   b55 = 43./1440.
-   b56 = 2272./6561.
-   b57 = 79937./1113912.
-   b58 = 3293./556956.
+   b53 = 4440339./15491840.
+   b54 = 24353./124800.
+   b55 = 387./44800.
+   b56 = 2152./5985.
+   b57 = 7267./94080.
+   b58 = 0.
 
    # Find "slopes"
    k1 = f(t       , x                                                                             )
@@ -852,9 +854,9 @@ def bs45(t,           # Current time
    k8 = f(t + c8*h, x + a81*h*k1 + a82*h*k2 + a83*h*k3 + a84*h*k4 + a85*h*k5 + a86*h*k6 + a87*h*k7)
 
    # Find fourth and fifth order prediction of new point
-   x_4 = x + h*(b41*k1 + b42*k2 + b43*k3 + b44*k4 + b45*k5 + b46*k6 + b47*k7        )
-   _x_4 = x + h*(_b41*k1 + _b42*k2 + _b43*k3 + _b44*k4 + _b45*k5 + _b46*k6 + _b47*k7 )
-   x_5 = x + h*(b51*k1 + b52*k2 + b53*k3 + b54*k4 + b55*k5 + b56*k6 + b57*k7 + b58*k8)
+   x_4 = x + h*(b41*k1 + b42*k2 + b43*k3 + b44*k4 + b45*k5 + b46*k6 + b47*k7 + b48*k8         )
+   _x_4 = x + h*(_b41*k1 + _b42*k2 + _b43*k3 + _b44*k4 + _b45*k5 + _b46*k6 + _b47*k7 + _b48*k8)
+   x_5 = x + h*(b51*k1 + b52*k2 + b53*k3 + b54*k4 + b55*k5 + b56*k6 + b57*k7 + b58*k8         )
 
    # Implementing error check and variable stepsize roughly as in
    # Hairer, Nørsett and Wanner: "Solving ordinary differential
@@ -862,7 +864,7 @@ def bs45(t,           # Current time
    #                              pages 167 and 168 in the 2008 ed.
 
    # The method is 5th order, with 4th order interpolation, hence:
-   q = 4.
+   q = 5.
    
    sc = atol + np.maximum(np.abs(x_4), np.abs(_x_4)) * rtol
    err = np.amax(np.sqrt((x_4-_x_4)**2)/sc)

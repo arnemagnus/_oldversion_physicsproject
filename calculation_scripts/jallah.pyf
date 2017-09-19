@@ -1,0 +1,125 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module euler__user__routines 
+    interface euler_user_interface 
+        subroutine f(t,x,deriv) ! in :jallah:numerical_integrators.f90:single_step:euler:derivative
+            use common_parameters, only: wp
+            real(kind=8) intent(in) :: t
+            real(kind=8) intent(in) :: x
+            real(kind=8) intent(out) :: deriv
+        end subroutine f
+    end interface euler_user_interface
+end python module euler__user__routines
+python module rk2__user__routines 
+    interface rk2_user_interface 
+        subroutine f(t,x,deriv) ! in :jallah:numerical_integrators.f90:single_step:rk2:derivative
+            use common_parameters, only: wp
+            real(kind=8) intent(in) :: t
+            real(kind=8) intent(in) :: x
+            real(kind=8) intent(out) :: deriv
+        end subroutine f
+    end interface rk2_user_interface
+end python module rk2__user__routines
+python module rk3__user__routines 
+    interface rk3_user_interface 
+        subroutine f(t,x,deriv) ! in :jallah:numerical_integrators.f90:single_step:rk3:derivative
+            use common_parameters, only: wp
+            real(kind=8) intent(in) :: t
+            real(kind=8) intent(in) :: x
+            real(kind=8) intent(out) :: deriv
+        end subroutine f
+    end interface rk3_user_interface
+end python module rk3__user__routines
+python module rk4__user__routines 
+    interface rk4_user_interface 
+        subroutine f(t,x,deriv) ! in :jallah:numerical_integrators.f90:single_step:rk4:derivative
+            use common_parameters, only: wp
+            real(kind=8) intent(in) :: t
+            real(kind=8) intent(in) :: x
+            real(kind=8) intent(out) :: deriv
+        end subroutine f
+    end interface rk4_user_interface
+end python module rk4__user__routines
+python module rkdp54__user__routines 
+    interface rkdp54_user_interface 
+        subroutine f(t,x,deriv) ! in :jallah:numerical_integrators.f90:adaptive_step:rkdp54:derivative
+            use common_parameters, only: wp
+            real(kind=8) intent(in) :: t
+            real(kind=8) intent(in) :: x
+            real(kind=8) intent(out) :: deriv
+        end subroutine f
+    end interface rkdp54_user_interface
+end python module rkdp54__user__routines
+python module jallah ! in 
+    interface  ! in :jallah
+        module common_parameters ! in :jallah:numerical_integrators.f90
+            integer, parameter,optional :: wp=selected_real_kind(8)
+            real(kind=8), parameter,optional :: atol_default=1._wp/(10**6)
+            real(kind=8), parameter,optional :: rtol_default=1._wp/(10**9)
+            real(kind=8), parameter,optional :: fac=8._wp/10
+            real(kind=8), parameter,optional :: maxfac=2._wp
+        end module common_parameters
+        module single_step ! in :jallah:numerical_integrators.f90
+            use common_parameters, only: wp
+            subroutine euler(t,x,h,f,t_,x_,h_) ! in :jallah:numerical_integrators.f90:single_step
+                use euler__user__routines
+                real(kind=8) intent(in) :: t
+                real(kind=8) intent(in) :: x
+                real(kind=8) intent(in) :: h
+                external f
+                real(kind=8) intent(out) :: t_
+                real(kind=8) intent(out) :: x_
+                real(kind=8) intent(out) :: h_
+            end subroutine euler
+            subroutine rk2(t,x,h,f,t_,x_,h_) ! in :jallah:numerical_integrators.f90:single_step
+                use rk2__user__routines
+                real(kind=8) intent(in) :: t
+                real(kind=8) intent(in) :: x
+                real(kind=8) intent(in) :: h
+                external f
+                real(kind=8) intent(out) :: t_
+                real(kind=8) intent(out) :: x_
+                real(kind=8) intent(out) :: h_
+            end subroutine rk2
+            subroutine rk3(t,x,h,f,t_,x_,h_) ! in :jallah:numerical_integrators.f90:single_step
+                use rk3__user__routines
+                real(kind=8) intent(in) :: t
+                real(kind=8) intent(in) :: x
+                real(kind=8) intent(in) :: h
+                external f
+                real(kind=8) intent(out) :: t_
+                real(kind=8) intent(out) :: x_
+                real(kind=8) intent(out) :: h_
+            end subroutine rk3
+            subroutine rk4(t,x,h,f,t_,x_,h_) ! in :jallah:numerical_integrators.f90:single_step
+                use rk4__user__routines
+                real(kind=8) intent(in) :: t
+                real(kind=8) intent(in) :: x
+                real(kind=8) intent(in) :: h
+                external f
+                real(kind=8) intent(out) :: t_
+                real(kind=8) intent(out) :: x_
+                real(kind=8) intent(out) :: h_
+            end subroutine rk4
+        end module single_step
+        module adaptive_step ! in :jallah:numerical_integrators.f90
+            use common_parameters, only: wp,atol_default,rtol_default,fac,maxfac
+            subroutine rkdp54(t,x,h,f,t_,x_,h_,atol_opt,rtol_opt) ! in :jallah:numerical_integrators.f90:adaptive_step
+                use rkdp54__user__routines
+                real(kind=8) intent(in) :: t
+                real(kind=8) intent(in) :: x
+                real(kind=8) intent(in) :: h
+                external f
+                real(kind=8) intent(out) :: t_
+                real(kind=8) intent(out) :: x_
+                real(kind=8) intent(out) :: h_
+                real(kind=8), optional,intent(in) :: atol_opt
+                real(kind=8), optional,intent(in) :: rtol_opt
+            end subroutine rkdp54
+        end module adaptive_step
+    end interface 
+end python module jallah
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/

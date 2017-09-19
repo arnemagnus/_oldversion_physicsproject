@@ -228,20 +228,25 @@ def timestep(t,            # Current time level
 
 # We need a container for the current simulation time:
 t = t_min
+ts = np.ones(np.shape(xy))*t_min
+
+# We need a container for the current time step:
+hs = np.ones(np.shape(xy))*h_ref
 
 # We need to choose a numerical integrator:
-integrator = rk3
+integrator = euler
 
 # Lastly, we need a canvas:
 plt.figure()
-
+print(np.shape(hs))
+print(np.shape(hs[hs>0].reshape(201,401)))
 # Now, we're ready to step forwards in time:
 
 # First, we loop over the number of snapshots we want to generate:
 for i in range(n_snaps):
     # We step forwards in time from one snapshot to the next:
-    while t < (t_min +(i+1)*t_incr):
-        t, xy, yx, h, lyap = timestep(t,
+    while t < t_min + (i+1)*t_incr:
+       t, xy, yx, h, lyap = timestep(t,
                                       xy,
                                       yx,
                                       h,
@@ -255,7 +260,7 @@ for i in range(n_snaps):
                                       top_offset,
                                       bottom_offset
                                     )
-        h = np.minimum(h, t_min + (i+1)*t_incr - t)
+       h = np.minimum(h, t_min + (i+1)*t_incr - t)
     # Because we force the snapshots to be generated at fixed time
     # levels, we must perform an explicit check as to whether each
     # timestep will result in overshootiing.
