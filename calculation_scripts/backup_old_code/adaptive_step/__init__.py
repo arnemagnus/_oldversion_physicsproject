@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Changelog:
 #     2017-09-19: File created.
 #

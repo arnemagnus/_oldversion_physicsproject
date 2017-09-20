@@ -1,4 +1,6 @@
-from numerical_integrators import *
+from __future__ import division
+
+from numerical_integrators.adaptive_step import *
 
 import numpy as np
 
@@ -50,7 +52,7 @@ Ts, Xs = get_trajectory(f,rkbs32,t_max=30,h0=0.1,x0=0,t0=0)
 print('Bogacki-Shampine 3(2) steps: {}'.format(len(Ts)))
 plt.plot(Ts,Xs,'m-x', label = 'Bogacki-Shampine 3(2) solution')
 # Get trajectory, using Fehlberg method
-Ts, Xs = get_trajectory(f,rkf,t_max=30,h0=1e-2,x0=0,t0=0)
+Ts, Xs = get_trajectory(f,rkf45,t_max=30,h0=1e-2,x0=0,t0=0)
 print('Fehlberg 4(5) steps: {}'.format(len(Ts)))
 plt.plot(Ts,Xs, 'r.', label='Fehlberg 4(5) solution')
 # Get trajectory, using Dormand-Prince methods
@@ -61,7 +63,7 @@ Ts, Xs = get_trajectory(f,rkdp87,t_max=30,h0=1e-2,x0=0,t0=0)
 print('Dormand-Prince 8(7) steps: {}'.format(len(Ts)))
 plt.plot(Ts, Xs, 'cx', label='Dormand-Prince 8(7) solution')
 # Get trajectory, using Cash-Karp method
-Ts, Xs = get_trajectory(f, rkck,t_max=30,h0=1e-2,x0=0,t0=0)
+Ts, Xs = get_trajectory(f, rkck45,t_max=30,h0=1e-2,x0=0,t0=0)
 print('Cash-Karp 5(4) steps: {}'.format(len(Ts)))
 plt.plot(Ts, Xs, 'yx', label='Cash-Karp 5(4) solution')
 plt.plot(Ts, np.arctan(Ts), 'g--', label = 'Analytical solution')

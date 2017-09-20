@@ -1,3 +1,5 @@
+# -*- coding=utf-8 -*-
+
 # Changelog:
 #     2017-08-30: File created. Calculation not yet fully implemented.
 #
@@ -39,6 +41,8 @@
 
 #---------------------------------------------------------------------#
 
+from __future__ import division
+
 # First of all, I import the function definition for the velocity
 # field, and the numerical integrator. 
 #
@@ -48,7 +52,7 @@
 # integration scheme. 
 
 from velocity_field import vel
-from numerical_integrators import *
+from numerical_integrators.single_step import *
 
 # To speed up the timestep loop:
 from numba import jit
@@ -76,7 +80,7 @@ import numpy as np
 t_min, t_max = 0, 5
 
 # We need to define the timestep for the transport calculation:
-h = 0.1
+h = 0.01
 
 # In the event that we want to use adaptive timestep integrators,
 # or, as is the case in the current edition of the program, we
@@ -234,7 +238,7 @@ ts = np.ones(np.shape(xy))*t_min
 hs = np.ones(np.shape(xy))*h_ref
 
 # We need to choose a numerical integrator:
-integrator = euler
+integrator = rk4
 
 # Lastly, we need a canvas:
 plt.figure()

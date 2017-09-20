@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*- 
+
 # Changelog:
-#     2017-09-01: Dormand-Prince 5(4) method successfully implemented
-#                 for the first time, albeit with a radically
-#                 different overhanging file structure.
+#     2017-09-07: Bogacki-Shampine 3(2) method successfully
+#                 implemented for the first time, albeit with a
+#                 radically different overhanging file structure.
 #
 #     2017-09-19: Radically altered the structure of the numerical
 #                 integrator package. From here on out, each 
@@ -25,24 +27,24 @@
 # project in physics at NTNU, fall 2017.
 
 
-def rkdp54(t, x, h, f, atol = None, rtol = None):
+def rkbs32(t, x, h, f, atol = None, rtol = None):
    """This function attempts a single time step forwards, using the
-   Dormand-Prince 5(4) adaptive timestep integrator scheme. If the
-   new step is not accepted, the time level and the coordinates are
-   not updated, while the time increment is refined.
+   Bogacki-Shampine 3(2) adaptive timestep integrator scheme. If
+   the new step is not accepted, the time level and the coordinates 
+   are not updated, while the time increment is refined.
 
-   The Dormand-Prince 5(4) method calculates two independent
+   The Bogacki-Shampine 3(2) method calculates two independent
    approximations to a step forwards in time for an ODE system, of
-   fifth and fourth order, respectively. The scheme is tuned such that
-   the error of the fifth order solution is minimal.
+   second and third order, respectively. The scheme is tuned such 
+   that the error of the third order solution is minimal.
 
-   The fourth order solution (interpolant) is used in order to find a
-   criterion for rejecting / accepting the trial step:
+   The second order solution (interpolant) is used in order to find 
+   a criterion for rejecting / accepting the trial step:
        - If the difference between the two solutions is larger than 
          some threshold, the solution is rejected, and the time
          increment refined
        - If the difference between the solutions is smaller than or
-         equal to some threshold, the fifth order solution is 
+         equal to some threshold, the third order solution is 
          accepted, and the solver attempts to increase the time
          increment
 
@@ -59,8 +61,8 @@ def rkdp54(t, x, h, f, atol = None, rtol = None):
       _t:   New time level (if the trial step is accepted)
             Current time level (unaltered, if the trial step is
                rejected)
-      _x:   Dormand-Prince 5(4) approximation of the coordinates at
-               the new time level (if the trial step is accepted)
+      _x:   Bogacki-Shampine 3(2) approximation of the coordinates
+               at the new time level (if the trial step is accepted)
             Current coordinates (unaltered, if the trial step is
                rejected)
       _h:   Updated time increment. Generally increased or decreased,
@@ -84,86 +86,57 @@ def rkdp54(t, x, h, f, atol = None, rtol = None):
        rtol = rtol_default
 
    # Nodes
-   c2 = 1./5.
-   c3 = 3./10.
-   c4 = 4./5.
-   c5 = 8./9.
-   c6 = 1.
-   c7 = 1.
+   c2 = 1./2.
+   c3 = 3./4.
+   c4 = 1.
 
    # Matrix elements
-   a21 = 1./5.
-   a31 = 3./40.
-   a32 = 9./40.
-   a41 = 44./45.
-   a42 = -56./15.
-   a43 = 32./9.
-   a51 = 19372./6561.
-   a52 = -25350./2187.
-   a53 = 64448./6561.
-   a54 = -212./729.
-   a61 = 9017./3168.
-   a62 = -335./33.
-   a63 = 46732./5247.
-   a64 = 49./176.
-   a65 = -5103./18656.
-   a71 = 35./384.
-   a72 = 0.
-   a73 = 500./1113.
-   a74 = 125./192.
-   a75 = -2187./6784.
-   a76 = 11./84.
+   a21 = 1./2.
+   a31 = 0.
+   a32 = 3./4.
+   a41 = 2./9.
+   a42 = 1./3.
+   a43 = 4./9.
 
-   # Fourth-order weights
-   b41 = 5179./57600.
-   b42 = 0.
-   b43 = 7571./16695.
-   b44 = 393./640.
-   b45 = -92097./339200.
-   b46 = 187./2100.
-   b47 = 1./40.
+   # Second order weights
+   b21 = 7./24.
+   b22 = 1./4.
+   b23 = 1./3.
+   b24 = 1./8.
 
-   # Fifth-order weights
-   b51 = 35./384.
-   b52 = 0.
-   b53 = 500./1113.
-   b54 = 125./192.
-   b55 = -2187./6784.
-   b56 = 11./84.
-   b57 = 0.
+   # Third order weights
+   b31 = 2./9.
+   b32 = 1./3.
+   b33 = 4./9.
+   b34 = 0.
 
    # Find "slopes"
-   k1 = f(t       , x                                                )
-   k2 = f(t + c2*h, x + a21*h*k1                                     )
-   k3 = f(t + c3*h, x + a31*h*k1 + a32*h*k2                          )
-   k4 = f(t + c4*h, x + a41*h*k1 + a42*h*k2 + a43*h*k3               )
-   k5 = f(t + c5*h, x + a51*h*k1 + a52*h*k2 + a53*h*k3 + a54*h*k4    )
-   k6 = f(t + c6*h, x + a61*h*k1 + a62*h*k2 + a63*h*k3 + a64*h*k4
-                                                         + a65*h*k5)
-   k7 = f(t + c7*h, x + a71*h*k1 + a72*h*k2 + a73*h*k3 + a74*h*k4
-                                                         + a75*h*k5
-                                                           + a76*h*k6)
+   k1 = f(t       , x                                 )
+   k2 = f(t + c2*h, x + a21*h*k1                      )
+   k3 = f(t + c2*h, x + a31*h*k1 + a32*h*k2           )
+   k4 = f(t + c3*h, x + a41*h*k1 + a42*h*k2 + a43*h*k3)
 
-   # Find fourth and fifth order prediction of new point
-   x_4 = x + h*(b41*k1 + b42*k2 + b43*k3 + b44*k4 + b45*k5 + b46*k6
-                                                             + b47*k7)
-   x_5 = x + h*(b51*k1 + b52*k2 + b53*k3 + b54*k4 + b55*k5 + b56*k6
-                                                             + b57*k7)
+   # Find second and third order prediction of new point
+   x_2 = x + h*(b21*k1 + b22*k2 + b23*k3 + b24*k4)
+   x_3 = x + h*(b31*k1 + b32*k2 + b33*k3 + b34*k4)
 
    # Implementing error check and variable stepsize roughly as in
    # Hairer, Nørsett and Wanner: "Solving ordinary differential
    #                              equations I -- Nonstiff problems",
    #                              pages 167 and 168 in the 2008 ed.
 
-   # The method is 5th order, with 4th order interpolation, hence:
-   q = 4.
+   # The method is 3rd order, with 2nd order interpolation, hence:
+   q = 2.
    
-   sc = atol + np.maximum(np.abs(x_4), np.abs(x_5)) * rtol
-   err = np.amax(np.sqrt((x_4-x_5)**2)/sc)
+   sc = atol + np.maximum(np.abs(x_2), np.abs(x_3)) * rtol
+   err = np.amax(np.sqrt((x_2-x_3)**2)/sc)
 
+   # Safety factor for timestep correction
+   fac = 0.8
+   maxfac = 2
    if err <= 1.:
-       # Step is accepted, use fifth order result as next position
-       _x = x_5
+       # Step is accepted, use third order result as next position
+       _x = x_3
        _t = t + h
        # Refining h:
        # Should err happen to be 0, the optimal h is infinity.
@@ -181,3 +154,4 @@ def rkdp54(t, x, h, f, atol = None, rtol = None):
        h_opt = h * (1./err) ** (1./(q + 1.))
        _h = fac * h_opt
    return _t, _x, _h
+

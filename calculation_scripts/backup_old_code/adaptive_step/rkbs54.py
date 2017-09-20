@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Changelog:
 #     2017-09-07: Bogacki-Shampine 5(4) method successfully 
 #                 implemented for the first time, albeit with a 
