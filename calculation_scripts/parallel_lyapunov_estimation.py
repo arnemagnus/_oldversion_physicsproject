@@ -16,12 +16,12 @@ def simulation(N):
     import numpy as np
 
     import multiprocessing as mp
-    import os
-    os.system("taskset -p 0xff %d"% os.getpid())
+    #import os
+    #os.system("taskset -p 0xff %d"% os.getpid())
     t_min, t_max = 0, 5
 
-
-    h = 0.1
+    print(N)
+    h = 0.01
 
 
     x_min, x_max = 0, 2
