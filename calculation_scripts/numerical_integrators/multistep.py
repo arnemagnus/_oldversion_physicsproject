@@ -42,7 +42,21 @@ where t:    Current time level
 # Written by Arne Magnus T. Løken as part of a specialization
 # project in physics at NTNU, fall 2017.
 
+from __future__ import division
 
 #--------------------------------------------------------------------#
-#                  The Bogacki-Shampine 3(2) method                  #
+#                  The Adams-Bashford method                         #
 #--------------------------------------------------------------------#
+
+class AdaBas:
+
+    def __init__(self, t, x, h, f):
+        self.t = t
+
+        self.x = x
+
+        self.h = h
+        self.f = f
+
+
+

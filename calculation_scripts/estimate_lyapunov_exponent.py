@@ -80,7 +80,7 @@ import numpy as np
 t_min, t_max = 0, 5
 
 # We need to define the timestep for the transport calculation:
-h = 0.01
+h = 0.1
 
 # In the event that we want to use adaptive timestep integrators,
 # or, as is the case in the current edition of the program, we
@@ -105,7 +105,7 @@ Nx = 1 + int(np.floor(Ny-1)*(xmax-xmin)/(ymax-ymin))
 # the x- and y-coordinates of each fluid element at each timestep.
 # For this purpose, I choose to use meshgrids:
 
-xy, yx = np.meshgrid(np.linspace(xmin,xmax,Nx), np.linspace(ymin,ymax,Ny))
+yx, xy = np.meshgrid(np.linspace(xmin,xmax,Nx), np.linspace(ymin,ymax,Ny))
 
 # Keep a copy of the initial fluid element grid, in order to
 # correctly visualize the Lyapunov field:
@@ -150,7 +150,7 @@ lyap = np.zeros(xy.shape)
 
 # As a first approximation, we take a set number of snapshots of the
 # Lyapunov field:
-n_snaps = 10
+n_snaps = 1
 
 # A rather straightforward way to do this, is determining the total
 # time increment we want to simulate;
@@ -238,12 +238,12 @@ ts = np.ones(np.shape(xy))*t_min
 hs = np.ones(np.shape(xy))*h_ref
 
 # We need to choose a numerical integrator:
-integrator = rk4
+integrator = rk2
 
 # Lastly, we need a canvas:
-plt.figure()
+plt.figure(figsize=(10, 5), dpi = 300)
 print(np.shape(hs))
-print(np.shape(hs[hs>0].reshape(201,401)))
+print(np.shape(hs[hs>0].reshape(Ny, Nx)))
 # Now, we're ready to step forwards in time:
 
 # First, we loop over the number of snapshots we want to generate:
@@ -274,7 +274,9 @@ for i in range(n_snaps):
     h = h_ref
 
     # We plot the calculated FTLE field:
-    plt.pcolormesh(xy_ref,yx_ref,lyap,cmap='RdBu_r')
+    #plt.pcolormesh(xy_ref,yx_ref,lyap,cmap='RdBu_r')
+    plt.pcolormesh(xy,yx,  lyap, cmap='RdBu_r')
+    #plt.pcolormesh(np.flipud(np.fliplr(xy)), np.flipud(np.fliplr(yx)), np.rot90(lyap,2), cmap = 'RdBu_r')
     plt.colorbar()
     plt.title(r'$t=$ {}, {}, dt = {}, dx = {}'.format(t,
                                                       integrator.__name__,
@@ -293,6 +295,9 @@ for i in range(n_snaps):
 
     # We clear the canvas, preparing for the next snapshot:
     plt.clf()
+
+    print(np.shape(lyap))
+    print(np.shape(lyap[::-1, ::-1]))
 
     # Dump current Lyapunov field to text file, enabling error
     # estimation wrt. a reference (i.e. higher order) solution;
