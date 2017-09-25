@@ -100,7 +100,7 @@ def simulation(N):
     plt.figure(figsize = (10, int(10 * (Ny - 1)/(Nx - 1))), dpi = 300)
 
     part_x = np.floor(Nx/N).astype(int)
-    
+
     for j in xrange(N):
         print(j*part_x, Nx if j + 1 == N else (j + 1)*part_x - 1)
 
@@ -126,8 +126,8 @@ def simulation(N):
 
         for process in processlist:
             process.join()
-       
-      
+
+
 
 
         left_off[1:-2,1:-2] = np.sqrt((xy[0:-3,1:-2]-xy[1:-2,1:-2])**2
@@ -168,7 +168,7 @@ def simulation(N):
                 + '.png')
 
         plt.clf()
-                                      
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description=('Kake?'))

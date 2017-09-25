@@ -63,7 +63,7 @@ def vel(t,x,A=None,eps=None,w=None):
    if w == None:
       w = 1
 
-   x, y = x[0], x[1]   
+   x, y = x[0], x[1]
 
    vx = -np.pi*A * np.sin(np.pi*_f(t,x,eps,w)) * np.cos(np.pi*y)
    vy = (np.pi*A * np.cos(np.pi*_f(t,x,eps,w)) * np.sin(np.pi*y)
@@ -72,4 +72,4 @@ def vel(t,x,A=None,eps=None,w=None):
 
    return np.array([vx, vy])
 
-  
+

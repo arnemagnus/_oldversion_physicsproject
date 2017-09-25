@@ -53,7 +53,8 @@ from __future__ import print_function
 # integration scheme.
 
 from velocity_field import vel
-from numerical_integrators.single_step import *
+from numerical_integrators.single_step import euler, rk2, rk3, rk4
+from numerical_integrators.adaptive_step import rkdp54
 
 # To speed up the timestep loop:
 from numba import jit
@@ -173,27 +174,10 @@ def timestep(t,            # Current time level
              h,            # Timestep
              deriv,        # Function handle for the derivatives,
                            # in our case, the velocity field
-             integrator,   # Function handle for the numerical
+             integrator    # Function handle for the numerical
                            # integrator to use, e.g., 'euler' or 'rk4'
-             lyap,         # (MxN) container array for the Lyapunov
-                           # exponent (overwritten)
-             dx,           # Initial offset between nearest neighbor
-                           # fluid elements, in the x-direction
-             dy,           # -------------------''-------------------
-                           # ---------''----------  y-direction
-             left_offset,  # (MxN) container array for trajectory
-                           # offsets for each fluid element's initial
-                           # nearest neighbor to the left
-             right_offset, # ------------------''--------------------
-                           # ------------------''--------------------
-                           # ----------''----------- right
-             top_offset,   # ------------------''--------------------
-                           # ------------------''--------------------
-                           # nearest neighbor above
-             bottom_offset # ------------------''--------------------
-                           # ------------------''--------------------
-                           # ---.---''------- beneath
-            ):
+             ):
+
    # All numerical integrators return the following variables:
    #    t:    New time level       (for adaptive timestep integrators,
    #                                the time level is only updated if
@@ -209,26 +193,9 @@ def timestep(t,            # Current time level
                               h,
                               deriv
                              )
-   left_offset[1:-2,1:-2] = np.sqrt((xy[0:-3,1:-2]-xy[1:-2,1:-2])**2
-                                    +(yx[0:-3,1:-2]-yx[1:-2,1:-2])**2)
-   right_offset[1:-2,1:-2] = np.sqrt((xy[2:-1,1:-2]-xy[1:-2,1:-2])**2
-                                     +(yx[2:-1,1:-2]-yx[1:-2,1:-2])**2)
-
-   top_offset[1:-2,1:-2] = np.sqrt((xy[1:-2,0:-3]-xy[1:-2,1:-2])**2
-                                   +(yx[1:-2,0:-3]-yx[1:-2,1:-2])**2)
-   bottom_offset[1:-2,1:-2] = np.sqrt((xy[1:-2,2:-1]-xy[1:-2,1:-2])**2
-                                      +(yx[1:-2,2:-1]-yx[1:-2,1:-2])**2)
-
-   lyap = np.fmax(np.log(np.fmax(left_offset,right_offset))
-                      /np.log(dx)/t,
-                  np.log(np.fmax(top_offset,bottom_offset))
-                      /np.log(dy)/t
-                  )
-   # We return the new time level, the updated coordinates,
-   # the timestep and the calculated lyapunov field.
-   # The time level and timestep can be useful if adaptive timestep
-   # integrators are used.
-   return t, xy, yx, h, lyap
+   # We return the new time level, the updated coordinates and
+   # the (updated) timestep.
+   return t, xy, yx, h
 
 
 # We need a container for the current simulation time:
@@ -239,47 +206,64 @@ ts = np.ones(np.shape(xy))*t_min
 hs = np.ones(np.shape(xy))*h_ref
 
 # We need to choose a numerical integrator:
-integrator = rk2
+integrator = euler
 
 # Lastly, we need a canvas:
-plt.figure(figsize=(10, 5), dpi = 300)
-print(np.shape(hs))
-print(np.shape(hs[hs>0].reshape(Ny, Nx)))
+plt.figure(figsize=(10, np.ceil(Ny/Nx).astype(int)), dpi = 300)
+
+
 # Now, we're ready to step forwards in time:
 
 # First, we loop over the number of snapshots we want to generate:
-for i in range(n_snaps):
+for i in xrange(n_snaps):
     # We step forwards in time from one snapshot to the next:
-    while t < t_min + (i+1)*t_incr:
-       t, xy, yx, h, lyap = timestep(t,
-                                      xy,
-                                      yx,
-                                      h,
-                                      vel,
-                                      integrator,
-                                      lyap,
-                                      dx,
-                                      dy,
-                                      left_offset,
-                                      right_offset,
-                                      top_offset,
-                                      bottom_offset
-                                    )
-       h = np.minimum(h, t_min + (i+1)*t_incr - t)
+    while np.any(ts < t_min + (i+1)*t_incr):
+       ts[ts < t_min + (i+1)*t_incr], \
+           xy[ts < t_min + (i+1)*t_incr], \
+           yx[ts < t_min + (i+1)*t_incr], \
+           hs[ts < t_min + (i+1)*t_incr] = timestep(ts[ts < t_min + (i+1)*t_incr],
+                                                    xy[ts < t_min + (i+1)*t_incr],
+                                                    yx[ts < t_min + (i+1)*t_incr],
+                                                    hs[ts < t_min + (i+1)*t_incr],
+                                                    vel,
+                                                    integrator
+                                                   )
+
+       hs = np.minimum(hs, t_min + (i+1)*t_incr - ts)
     # Because we force the snapshots to be generated at fixed time
     # levels, we must perform an explicit check as to whether each
     # timestep will result in overshootiing.
     # Seeing as the timestep will be modified, catering to our
     # predetermined snapshot times, we have to reinitialize the
     # timestep after every snapshot. Hence:
-    h = h_ref
+    hs = np.ones(np.shape(xy))*h_ref
+    left_off[1:-2,1:-2] = np.sqrt((xy[0:-3,1:-2]-xy[1:-2,1:-2])**2
+                                    +(yx[0:-3,1:-2]-yx[1:-2,1:-2])**2)
+
+    right_off[1:-2,1:-2] = np.sqrt((xy[2:-1,1:-2]-xy[1:-2,1:-2])**2
+                                     +(yx[2:-1,1:-2]-yx[1:-2,1:-2])**2)
+
+
+    top_off[1:-2,1:-2] = np.sqrt((xy[1:-2,0:-3]-xy[1:-2,1:-2])**2
+                                   +(yx[1:-2,0:-3]-yx[1:-2,1:-2])**2)
+
+    bott_off[1:-2,1:-2] = np.sqrt((xy[1:-2,2:-1]-xy[1:-2,1:-2])**2
+                                     +(yx[1:-2,2:-1]-yx[1:-2,1:-2])**2)
+
+
+    lyap = np.fmax(np.log(np.fmax(left_off,right_off)
+                  /dx)/(t_min+(i+1)*t_incr),
+              np.log(np.fmax(top_off,bott_off)
+                  /dy)/(t_min+(i+1)*t_incr)
+                  )
+
 
     # We plot the calculated FTLE field:
     #plt.pcolormesh(xy_ref,yx_ref,lyap,cmap='RdBu_r')
-    plt.pcolormesh(xy,yx,  lyap, cmap='RdBu_r')
-    #plt.pcolormesh(np.flipud(np.fliplr(xy)), np.flipud(np.fliplr(yx)), np.rot90(lyap,2), cmap = 'RdBu_r')
+    plt.pcolormesh(xy[1:-2,1:-2],yx[1:-2,1:-2],  lyap[1:-2,1:-2], cmap='RdBu_r')
+
     plt.colorbar()
-    plt.title(r'$t=$ {}, {}, dt = {}, dx = {}'.format(t,
+    plt.title(r'$t=$ {}, {}, dt = {}, dx = {}'.format(t_min + (i+1)*t_incr,
                                                       integrator.__name__,
                                                       h,
                                                       dx
@@ -287,7 +271,7 @@ for i in range(n_snaps):
              )
     plt.savefig('figure_debug/' +
                 'lyapunov_{}_t={}_dt={}_dx={}'.format(integrator.__name__,
-                                                      t,
+                                                      t_min + (i+1)*t_incr,
                                                       h,
                                                       dx
                                                       )
@@ -297,8 +281,8 @@ for i in range(n_snaps):
     # We clear the canvas, preparing for the next snapshot:
     plt.clf()
 
-    print(np.shape(lyap))
-    print(np.shape(lyap[::-1, ::-1]))
+
+
 
     # Dump current Lyapunov field to text file, enabling error
     # estimation wrt. a reference (i.e. higher order) solution;

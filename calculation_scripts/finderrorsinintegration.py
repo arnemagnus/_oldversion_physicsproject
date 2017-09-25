@@ -38,7 +38,7 @@ for integrator in integrators:
                                                                         dx)
                                 + '.txt'
                                 )
-                        )         
+                        )
             textbuf += (('Error of {} with dt = {} with {} solution for '
                'dt = {} as reference, dx = {}, at t = {}:\n'.format(integrator,
                                                                     dt[i],
@@ -53,4 +53,4 @@ for integrator in integrators:
 
             textbuf += '-'*100 + '\n\n'
         np.savetxt(fname=(outfilepath+outfilename), X=[textbuf], fmt='%s')
-                  
+

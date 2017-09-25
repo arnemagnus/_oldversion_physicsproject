@@ -11,7 +11,7 @@
    increasing precision is, put simply, more floating-point
    operations. This increases computation time, and increases the
    numerical errors in the proposed solutions.
-   
+
    Adaptive timestep methods, on the other hand, can be trickier to
    parallellize than their fixed timestep siblings. This is because
    two different trajectories are generally traversed with two
