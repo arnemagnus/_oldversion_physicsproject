@@ -48,7 +48,7 @@
 # integration scheme.
 
 from velocity_field import vel
-#from numerical_integrators.single_step import euler, rk2, rk3, rk4
+from numerical_integrators.single_step import euler, rk2, rk3, rk4
 from numerical_integrators.adaptive_step import rkhe21, rkdp54
 
 # To speed up the timestep loop:
@@ -88,26 +88,31 @@ h = 0.1
 h_ref = np.copy(h)
 
 # Let's define the domain of the velocity field:
-xmin, xmax = 0, 2
-ymin, ymax = 0, 1
+x_min, x_max = 0, 2
+y_min, y_max = 0, 1
 
 # Seeing as we desire a quadratic grid, the number of grid points
 # in either directions will be codependent. I choose the number of
 # grid points in the x-direction to be the dependent variable. Hence:
 Ny = 201
-Nx = 1 + int(np.floor(Ny-1)*(xmax-xmin)/(ymax-ymin))
+Nx = 1 + int(np.floor(Ny-1)*(x_max-x_min)/(y_max-y_min))
 
 # With the above definition, we will get a quadratic grid.
 # Regardless of the integration scheme, we will need to keep hold of
 # the x- and y-coordinates of each fluid element at each timestep.
 # For this purpose, I choose to use meshgrids:
 
-yx, xy = np.meshgrid(np.linspace(xmin,xmax,Nx), np.linspace(ymin,ymax,Ny))
+x0 = np.linspace(x_min, x_max, Nx)
+y0 = np.linspace(y_min, y_max, Ny)
 
-# Keep a copy of the initial fluid element grid, in order to
-# correctly visualize the Lyapunov field:
+x = np.zeros(Nx*Ny)
+y = np.copy(x)
 
-xy_ref, yx_ref = np.copy(xy), np.copy(yx)
+for j in range(Ny):
+    x[j*Nx:(j+1)*Nx] = x0
+    y[j*Nx:(j+1)*Nx] = y0[j]
+
+pos = np.array([x, y])
 
 # To begin with, we're interested in finding the FTLE, so finding
 # an estimate at each time instance seems like a reasonable approach.
@@ -117,8 +122,8 @@ xy_ref, yx_ref = np.copy(xy), np.copy(yx)
 # fluid elements, and their separation at time instant t, to find
 # the FTLE at time instant t.
 
-dx = (xmax - xmin)/(Nx - 1)
-dy = (ymax - ymin)/(Ny - 1)
+dx = (x_max - x_min)/(Nx - 1)
+dy = (y_max - y_min)/(Ny - 1)
 
 # Estimating the FTLE by finding the largest divergence in trajectories
 # between a fluid element and its nearest neighbors will not work.
@@ -132,14 +137,14 @@ dy = (ymax - ymin)/(Ny - 1)
 # initialize with ones(:) rather than zeros(:) to avoid headaches when
 # we take the logarithm later.
 
-left_offset = np.ones(xy.shape)
-right_offset = np.ones(xy.shape)
+left_offset = np.zeros([Nx, Ny])
+right_offset = np.copy(left_offset)
 
-top_offset = np.ones(xy.shape)
-bottom_offset = np.ones(xy.shape)
+top_offset = np.copy(left_offset)
+bottom_offset = np.copy(left_offset)
 
 # We also preallocate a container for the FTLE estimate:
-lyap = np.zeros(xy.shape)
+lyap = np.copy(left_offset)
 
 # Now, we step forward in time. At each time instant, we must find the
 # largest FTLE estimate, based on trajectory divergence between each
@@ -162,10 +167,7 @@ t_incr = t_tot / n_snaps
 # of just-in-time compilation, among other things.
 
 def timestep(t,            # Current time level
-             xy,           # (MxN) meshgrid of x-coordinates for the
-                           # fluid elements at the current time level
-             yx,           # -------''------- y-coordinates ----''----
-                           # ----------------''----------------
+             pos,
              h,            # Timestep
              deriv,        # Function handle for the derivatives,
                            # in our case, the velocity field
@@ -183,28 +185,28 @@ def timestep(t,            # Current time level
    #    h:    Timestep             (subject to change in adaptive
    #                                timestep integrators, otherwise
    #                                unaltered)
-   t,(xy, yx), h = integrator(t,
-                              np.array([xy, yx]),
+   t, pos, h = integrator(t,
+                              pos,
                               h,
-                              deriv, atol = 1e-3, rtol = 1e-3
-                             )
+                              deriv, atol = 1e-2, rtol = 1e-2
+                              )
    # We return the new time level, the updated coordinates and
    # the (updated) timestep.
-   return t, xy, yx, h
+   return t, pos, h
 
 
 # We need a container for the current simulation time:
 t = t_min
-ts = np.ones(np.shape(xy))*t_min
+ts = np.ones(Nx*Ny)*t_min
 
 # We need a container for the current time step:
-hs = np.ones(np.shape(xy))*h_ref
+hs = np.ones(np.shape(ts))*h_ref
 
 # We need to choose a numerical integrator:
 integrator = rkhe21
 
 # Lastly, we need a canvas:
-plt.figure(figsize=(10, np.ceil(Ny/Nx).astype(int)), dpi = 300)
+plt.figure(figsize=(10, 5), dpi = 300)
 
 
 # Now, we're ready to step forwards in time:
@@ -216,7 +218,7 @@ for i in range(n_snaps):
     while np.any(ts < t_min + (i+1)*t_incr):
        counter+=1
        hs = np.minimum(hs, t_min + (i+1)*t_incr - ts)
-       ts, xy, yx, hs = timestep(ts, xy, yx, hs, vel, integrator)
+       ts, pos, hs = timestep(ts, pos, hs, vel, integrator)
 
     print(counter)
     # Because we force the snapshots to be generated at fixed time
@@ -225,7 +227,11 @@ for i in range(n_snaps):
     # Seeing as the timestep will be modified, catering to our
     # predetermined snapshot times, we have to reinitialize the
     # timestep after every snapshot. Hence:
-    hs = np.ones(np.shape(xy))*h_ref
+    hs = np.ones(np.shape(hs))*h_ref
+
+    xy = pos[0].reshape(Nx, Ny)
+    yx = pos[1].reshape(Nx, Ny)
+
     left_offset[1:-2,1:-2] = np.sqrt((xy[0:-3,1:-2]-xy[1:-2,1:-2])**2
                                     +(yx[0:-3,1:-2]-yx[1:-2,1:-2])**2)
 
@@ -239,10 +245,9 @@ for i in range(n_snaps):
     bottom_offset[1:-2,1:-2] = np.sqrt((xy[1:-2,2:-1]-xy[1:-2,1:-2])**2
                                      +(yx[1:-2,2:-1]-yx[1:-2,1:-2])**2)
 
-
-    lyap = np.fmax(np.log(np.fmax(left_offset,right_offset)
+    lyap[1:-2,1:-2] = np.fmax(np.log(np.fmax(left_offset[1:-2,1:-2],right_offset[1:-2,1:-2])
                   /dx)/(t_min+(i+1)*t_incr),
-              np.log(np.fmax(top_offset,bottom_offset)
+                  np.log(np.fmax(top_offset[1:-2,1:-2],bottom_offset[1:-2,1:-2])
                   /dy)/(t_min+(i+1)*t_incr)
                   )
 
