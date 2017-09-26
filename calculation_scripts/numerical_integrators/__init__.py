@@ -54,6 +54,6 @@
 # Written by Arne Magnus T. Løken as part of a specialization
 # project in physics at NTNU, fall 2017.
 
-import adaptive_step
-import multistep
-import single_step
+import numerical_integrators.adaptive_step
+import numerical_integrators.multistep
+import numerical_integrators.single_step

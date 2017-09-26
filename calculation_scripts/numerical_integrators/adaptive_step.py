@@ -1,46 +1,46 @@
-"""This module contains a selection of adaptive timestep integrators
-intended for general-purpose use. All integrators have the same
-function signature, as in, they take the same input parameters and
-return the same output variables in the same order, with the
-difference being the underlying integration scheme.
+"""   This module contains a selection of adaptive timestep integrators
+   intended for general-purpose use. All integrators have the same
+   function signature, as in, they take the same input parameters and
+   return the same output variables in the same order, with the
+   difference being the underlying integration scheme.
 
-The module contains the following adaptive step size integrators:
-   rkbs32: Bogacki-Shampine 3(2)
-   rkbs54: Bogacki-Shampine 5(4)
-   rkck45: Cash-Karp 4(5)
-   rkdp54: Dormand-Prince 5(4)
-   rkdp87: Dormand-Prince 8(7)
-   rkf12:  Runge-Kutta-Fehlberg 1(2)
-   rkf45:  Runge-Kutta-Fehlberg 4(5)
-   rkhe21: Heun-Euler 2(1)
+   The module contains the following adaptive step size integrators:
+      rkbs32: Bogacki-Shampine 3(2)
+      rkbs54: Bogacki-Shampine 5(4)
+      rkck45: Cash-Karp 4(5)
+      rkdp54: Dormand-Prince 5(4)
+      rkdp87: Dormand-Prince 8(7)
+      rkf12:  Runge-Kutta-Fehlberg 1(2)
+      rkf45:  Runge-Kutta-Fehlberg 4(5)
+      rkhe21: Heun-Euler 2(1)
 
-where the digit outside of the parenthesis indicates the method order,
-and the digit within the parenthesis indicates the order of the
-interpolant solution (used in adjusting the time step).
+   where the digit outside of the parenthesis indicates the method order,
+   and the digit within the parenthesis indicates the order of the
+   interpolant solution (used in adjusting the time step).
 
-All functions have the same structure:
+   All functions have the same structure:
 
-def scheme(t, x, h, f, atol, rtol):
-   [...]
-   return _t, _x, _h
+   def scheme(t, x, h, f, atol, rtol):
+      [...]
+      return _t, _x, _h
 
-where t:    Current time level
-      x:    Current coordinates, array-like
-      h:    Current time increment
-      f:    Function handle for the derivatives (the RHS of the ODE
-               system), function signature: f = f(t, x)
-      atol: Absolute tolerance level (OPTIONAL)
-      rtol: Relative tolerance level (OPTIONAL)
+   where t:    Current time level
+         x:    Current coordinates, array-like
+         h:    Current time increment
+         f:    Function handle for the derivatives (the RHS of the ODE
+                  system), function signature: f = f(t, x)
+         atol: Absolute tolerance level (OPTIONAL)
+         rtol: Relative tolerance level (OPTIONAL)
 
-      _t:   New time level (if trial step is accepted)
-            Current time level (unaltered, if the trial step is
-               rejected)
-      _x:   Approximation of the coordinates at the new time level
-               (if trial step is accepted)
-            Current coordinates (unaltered, if the trial step is
-               rejected)
-      _h:   Updated time increment. Generally increased or decreased,
-               depending on whether the trial step is accepted or not
+         _t:   New time level (if trial step is accepted)
+               Current time level (unaltered, if the trial step is
+                  rejected)
+         _x:   Approximation of the coordinates at the new time level
+                  (if trial step is accepted)
+               Current coordinates (unaltered, if the trial step is
+                  rejected)
+         _h:   Updated time increment. Generally increased or decreased,
+                  depending on whether the trial step is accepted or not
 """
 
 
@@ -135,10 +135,10 @@ def rkbs32(t, x, h, f, atol = None, rtol = None):
    import numpy as np
 
    # We import the predefined default tolerance levels:
-   from _adaptive_timestep_params import atol_default, rtol_default
+   from numerical_integrators._adaptive_timestep_params import atol_default, rtol_default
 
    # We import the predefined safety factors for timestep correction:
-   from _adaptive_timestep_params import fac, maxfac
+   from numerical_integrators._adaptive_timestep_params import fac, maxfac
 
    # We explicitly handle the optional arguments:
    if not atol:
@@ -267,10 +267,10 @@ def rkbs54(t, x, h, f, atol = None, rtol = None):
    import numpy as np
 
    # We import the predefined default tolerance levels:
-   from _adaptive_timestep_params import atol_default, rtol_default
+   from numerical_integrators._adaptive_timestep_params import atol_default, rtol_default
 
    # We import the predefined safety factors for timestep correction:
-   from _adaptive_timestep_params import fac, maxfac
+   from numerical_integrators._adaptive_timestep_params import fac, maxfac
 
    # We explicitly handle the optional arguments:
    if not atol:
@@ -465,10 +465,10 @@ def rkck45(t, x, h, f, atol = None, rtol = None):
    import numpy as np
 
    # We import the predefined default tolerance levels:
-   from _adaptive_timestep_params import atol_default, rtol_default
+   from numerical_integrators._adaptive_timestep_params import atol_default, rtol_default
 
    # We import the predefined safety factors for timestep correction:
-   from _adaptive_timestep_params import fac, maxfac
+   from numerical_integrators._adaptive_timestep_params import fac, maxfac
 
    # We explicitly handle the optional arguments:
    if not atol:
@@ -614,10 +614,10 @@ def rkdp54(t, x, h, f, atol = None, rtol = None):
     import numpy as np
 
     # We import the predefined default tolerance levels:
-    from _adaptive_timestep_params import atol_default, rtol_default
+    from numerical_integrators._adaptive_timestep_params import atol_default, rtol_default
 
     # We import the predefined safety factors for timestep correction:
-    from _adaptive_timestep_params import fac, maxfac
+    from numerical_integrators._adaptive_timestep_params import fac, maxfac
 
     # We explicitly handle the optional arguments:
     if not atol:
@@ -829,10 +829,10 @@ def rkdp87(t, x, h, f, atol = None, rtol = None):
    import numpy as np
 
    # We import the predefined default tolerance levels:
-   from _adaptive_timestep_params import atol_default, rtol_default
+   from numerical_integrators._adaptive_timestep_params import atol_default, rtol_default
 
    # We import the predefined safety factors for timestep correction:
-   from _adaptive_timestep_params import fac, maxfac
+   from numerical_integrators._adaptive_timestep_params import fac, maxfac
 
    # We explicitly handle the optional arguments:
    if not atol:
@@ -1091,10 +1091,10 @@ def rkf12(t, x, h, f, atol = None, rtol = None):
    import numpy as np
 
    # We import the predefined default tolerance levels:
-   from _adaptive_timestep_params import atol_default, rtol_default
+   from numerical_integrators._adaptive_timestep_params import atol_default, rtol_default
 
    # We import the predefined safety factors for timestep correction:
-   from _adaptive_timestep_params import fac, maxfac
+   from numerical_integrators._adaptive_timestep_params import fac, maxfac
 
    # We explicitly handle the optional arguments:
    if not atol:
@@ -1215,10 +1215,10 @@ def rkf45(t, x, h, f, atol = None, rtol = None):
    import numpy as np
 
    # We import the predefined default tolerance levels:
-   from _adaptive_timestep_params import atol_default, rtol_default
+   from numerical_integrators._adaptive_timestep_params import atol_default, rtol_default
 
    # We import the predefined safety factors for timestep correction:
-   from _adaptive_timestep_params import fac, maxfac
+   from numerical_integrators._adaptive_timestep_params import fac, maxfac
 
    # We explicitly handle the optional arguments:
    if not atol:
@@ -1364,10 +1364,10 @@ def rkhe21(t, x, h, f, atol = None, rtol = None):
    import numpy as np
 
    # We import the predefined default tolerance levels:
-   from _adaptive_timestep_params import atol_default, rtol_default
+   from numerical_integrators._adaptive_timestep_params import atol_default, rtol_default
 
    # We import the predefined safety factors for timestep correction:
-   from _adaptive_timestep_params import fac, maxfac
+   from numerical_integrators._adaptive_timestep_params import fac, maxfac
 
    # We explicitly handle the optional arguments:
    if not atol:
@@ -1406,25 +1406,43 @@ def rkhe21(t, x, h, f, atol = None, rtol = None):
    q = 1.
 
    sc = atol + np.maximum(np.abs(x_1), np.abs(x_2)) * rtol
-   err = np.amax(np.sqrt((x_1-x_2)**2)/sc)
+   err = np.amax(np.sqrt((x_1-x_2)**2)/sc, axis = 0)
 
-   if err <= 1.:
-       # Step is accepted, use first order result as next position
-       _x = x_2
-       _t = t + h
-       # Refining h:
-       # Should err happen to be 0, the optimal h is infinity.
-       # We set an upper limit to get sensible behaviour:
-       if err == 0.:
-           h_opt = 10
-       else:
-           h_opt = h * (1./err) ** (1./(q + 1.))
-       _h = max(maxfac * h, fac * h_opt)
-   else:
-       # Step is rejected, position and time not updated
-       _x = x
-       _t = t
-       # Refining h:
-       h_opt = h * (1./err) ** (1./(q + 1.))
-       _h = fac * h_opt
+   h_opt = np.zeros(np.shape(h))
+   _t = np.zeros(np.shape(t))
+   _x = np.zeros(np.shape(x))
+   _h = np.zeros(np.shape(h))
+
+   h_opt[np.equal(err, 0.)] = 10
+   h_opt[np.greater(err, 0.)] = h[np.greater(err, 0.)] * (1./err[np.greater(err, 0.)]) ** (1./(q + 1.))
+
+   if np.any(np.less_equal(err, 1.)):
+       _x[np.array([np.less_equal(err, 1.),]*len(x))]= x_2[np.array([np.less_equal(err, 1.),]*len(x))]
+       _t[np.less_equal(err, 1.)] = t[np.less_equal(err, 1.)] + h[np.less_equal(err, 1.)]
+       _h[np.less_equal(err, 1.)] = np.maximum(maxfac * h[np.less_equal(err, 1.)], fac * h_opt[np.less_equal(err, 1.)])
+   if np.any(np.greater(err, 1.)):
+       _x[np.array([np.greater(err, 1.),]*len(x))] = x[np.array([np.greater(err, 1.),]*len(x))]
+       _t[np.greater(err, 1.)] = t[np.greater(err, 1.)]
+       _h[np.greater(err, 1.)] = fac * h_opt[np.greater(err, 1.)]
+
+
+   #if err <= 1.:
+   #    # Step is accepted, use first order result as next position
+   #    _x = x_2
+   #    _t = t + h
+   #    # Refining h:
+   #    # Should err happen to be 0, the optimal h is infinity.
+   #    # We set an upper limit to get sensible behaviour:
+   #    if err == 0.:
+   #        h_opt = 10
+   #    else:
+   #        h_opt = h * (1./err) ** (1./(q + 1.))
+   #    _h = max(maxfac * h, fac * h_opt)
+   #else:
+   #    # Step is rejected, position and time not updated
+   #    _x = x
+   #    _t = t
+   #    # Refining h:
+   #    h_opt = h * (1./err) ** (1./(q + 1.))
+   #    _h = fac * h_opt
    return _t, _x, _h

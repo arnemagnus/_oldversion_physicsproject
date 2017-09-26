@@ -54,7 +54,7 @@ Ts, Xs = get_trajectory(f,rkf45,t_max=30,h0=1e-2,x0=0,t0=0)
 print('Fehlberg 4(5) steps: {}'.format(len(Ts)))
 plt.plot(Ts,Xs, 'r.', label='Fehlberg 4(5) solution')
 # Get trajectory, using Dormand-Prince methods
-Ts, Xs = get_trajectory(f,rkdp54,t_max=30,h0=1e-2,x0=0,t0=0)
+Ts, Xs = get_trajectory(f,rkdp54,t_max=30,h0=1e-2,x0=np.asarray(0),t0=np.asarray(0))
 print('Dormand-Prince 5(4) steps: {}'.format(len(Ts)))
 plt.plot(Ts, Xs, 'bo', label='Dormand-Prince 5(4) solution')
 Ts, Xs = get_trajectory(f,rkdp87,t_max=30,h0=1e-2,x0=0,t0=0)

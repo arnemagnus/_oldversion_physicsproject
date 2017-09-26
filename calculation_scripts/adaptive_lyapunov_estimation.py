@@ -48,11 +48,11 @@
 # integration scheme.
 
 from velocity_field import vel
-from numerical_integrators.single_step import euler, rk2, rk3, rk4
-from numerical_integrators.adaptive_step import rkdp54
+#from numerical_integrators.single_step import euler, rk2, rk3, rk4
+from numerical_integrators.adaptive_step import rkhe21, rkdp54
 
 # To speed up the timestep loop:
-from numba import jit
+#from numba import jit
 
 # For plotting purposes:
 import matplotlib.pyplot as plt
@@ -201,7 +201,7 @@ ts = np.ones(np.shape(xy))*t_min
 hs = np.ones(np.shape(xy))*h_ref
 
 # We need to choose a numerical integrator:
-integrator = euler
+integrator = rkhe21
 
 # Lastly, we need a canvas:
 plt.figure(figsize=(10, np.ceil(Ny/Nx).astype(int)), dpi = 300)
@@ -210,7 +210,7 @@ plt.figure(figsize=(10, np.ceil(Ny/Nx).astype(int)), dpi = 300)
 # Now, we're ready to step forwards in time:
 
 # First, we loop over the number of snapshots we want to generate:
-for i in xrange(n_snaps):
+for i in range(n_snaps):
     # We step forwards in time from one snapshot to the next:
     while np.any(ts < t_min + (i+1)*t_incr):
        ts[ts < t_min + (i+1)*t_incr], \
@@ -232,23 +232,23 @@ for i in xrange(n_snaps):
     # predetermined snapshot times, we have to reinitialize the
     # timestep after every snapshot. Hence:
     hs = np.ones(np.shape(xy))*h_ref
-    left_off[1:-2,1:-2] = np.sqrt((xy[0:-3,1:-2]-xy[1:-2,1:-2])**2
+    left_offset[1:-2,1:-2] = np.sqrt((xy[0:-3,1:-2]-xy[1:-2,1:-2])**2
                                     +(yx[0:-3,1:-2]-yx[1:-2,1:-2])**2)
 
-    right_off[1:-2,1:-2] = np.sqrt((xy[2:-1,1:-2]-xy[1:-2,1:-2])**2
+    right_offset[1:-2,1:-2] = np.sqrt((xy[2:-1,1:-2]-xy[1:-2,1:-2])**2
                                      +(yx[2:-1,1:-2]-yx[1:-2,1:-2])**2)
 
 
-    top_off[1:-2,1:-2] = np.sqrt((xy[1:-2,0:-3]-xy[1:-2,1:-2])**2
+    top_offset[1:-2,1:-2] = np.sqrt((xy[1:-2,0:-3]-xy[1:-2,1:-2])**2
                                    +(yx[1:-2,0:-3]-yx[1:-2,1:-2])**2)
 
-    bott_off[1:-2,1:-2] = np.sqrt((xy[1:-2,2:-1]-xy[1:-2,1:-2])**2
+    bottom_offset[1:-2,1:-2] = np.sqrt((xy[1:-2,2:-1]-xy[1:-2,1:-2])**2
                                      +(yx[1:-2,2:-1]-yx[1:-2,1:-2])**2)
 
 
-    lyap = np.fmax(np.log(np.fmax(left_off,right_off)
+    lyap = np.fmax(np.log(np.fmax(left_offset,right_offset)
                   /dx)/(t_min+(i+1)*t_incr),
-              np.log(np.fmax(top_off,bott_off)
+              np.log(np.fmax(top_offset,bottom_offset)
                   /dy)/(t_min+(i+1)*t_incr)
                   )
 
