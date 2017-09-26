@@ -1,19 +1,17 @@
-# -*- coding=utf-8 -*-
-
 # This file contains default values for absolute and relative
 # tolerance levels, as well as safety factors for updating the
 # time increment, in adaptive timestep integrators.
-# 
+#
 # Changelog:
 #     2017-09-19: File created, as part of a radical restructuring of
-#                 the numerical integrator package. From here on out, 
-#                 the integrators are sorted in separate files based, 
+#                 the numerical integrator package. From here on out,
+#                 the integrators are sorted in separate files based,
 #                 on their type, i.e., whether they are single-,
 #                 multi- or adaptive step methods, facilitating
 #                 finding any given integrator in the event that
 #                 changes must be made.
 #
-#                 Thus, the integrators now follow a more 
+#                 Thus, the integrators now follow a more
 #                 logical hierarchial system, with single-step
 #                 integrators clearly differentiated from their
 #                 multi-step brethren, for instance.

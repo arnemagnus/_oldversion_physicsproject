@@ -1,5 +1,3 @@
-# -*- coding=utf-8 -*-
-
 """   This module contains a selection of fixed increment single-step
 integrators intended for general-purpose use. All integrators have
 the same function signature, as in, they take the same input
@@ -26,7 +24,7 @@ where t:    Current time level
       f:    Function handle for the derivatives (the RHS of the ODE
                system), function signature: f = f(t, x)
 
-      _t:   New time level 
+      _t:   New time level
       _x:   Approximation of the coordinates at the new time level
       _h:   Time increment (unaltered, yet returned, in order for
               the return variable signatures of the numerical
@@ -58,12 +56,12 @@ where t:    Current time level
 #                 structure.
 #
 #     2017-09-19: Radically altered the structure of the numerical
-#                 integrator package. From here on out, each 
-#                 integrator kind is contained within its own module, 
+#                 integrator package. From here on out, each
+#                 integrator kind is contained within its own module,
 #                 facilitating finding any given integrator in the
 #                 event that changes must be made.
 #
-#                 In addition, the integrators now follow a more 
+#                 In addition, the integrators now follow a more
 #                 logical hierarchial system, with single-step
 #                 integrators clearly differentiated from their
 #                 multi-step brethren, for instance.
@@ -113,8 +111,8 @@ def euler(t, x, h, f):
    # Find new time level
    _t = t + h
    # Find estimate of coordinates at new time level
-   _x = x + k1*h   
-   
+   _x = x + k1*h
+
    return _t, _x, h
 
 
@@ -140,7 +138,7 @@ def rk2(t, x, h, f):
 
    Output:
       _t: New time level
-      _x: Heun approximation of the coordinates at the new time 
+      _x: Heun approximation of the coordinates at the new time
               level
       _h: Time increment (unaltered, yet returned, in order for
               the return variable signatures of the numerical

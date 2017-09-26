@@ -1,5 +1,3 @@
-# -*- coding=utf-8 -*-
-
 """   This module contains a variety of numerical integration schemes,
    including both single-, multi- and adaptive timestep methods.
 

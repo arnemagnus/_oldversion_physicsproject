@@ -1,5 +1,3 @@
-# -*- coding=utf-8 -*-
-
 """   This module contains a selection of multistep integrators
 intended for general-purpose use. All integrators have the same
 function signature, as in, they take the same input parameters and
@@ -42,7 +40,6 @@ where t:    Current time level
 # Written by Arne Magnus T. Løken as part of a specialization
 # project in physics at NTNU, fall 2017.
 
-from __future__ import division
 
 #--------------------------------------------------------------------#
 #                  The Adams-Bashford method                         #

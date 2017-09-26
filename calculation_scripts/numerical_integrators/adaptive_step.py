@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """This module contains a selection of adaptive timestep integrators
 intended for general-purpose use. All integrators have the same
 function signature, as in, they take the same input parameters and
@@ -176,8 +174,8 @@ def rkbs32(t, x, h, f, atol = None, rtol = None):
    # Find "slopes"
    k1 = f(t       , x                                 )
    k2 = f(t + c2*h, x + a21*h*k1                      )
-   k3 = f(t + c2*h, x + a31*h*k1 + a32*h*k2           )
-   k4 = f(t + c3*h, x + a41*h*k1 + a42*h*k2 + a43*h*k3)
+   k3 = f(t + c3*h, x + a31*h*k1 + a32*h*k2           )
+   k4 = f(t + c4*h, x + a41*h*k1 + a42*h*k2 + a43*h*k3)
 
    # Find second and third order prediction of new point
    x_2 = x + h*(b21*k1 + b22*k2 + b23*k3 + b24*k4)
@@ -194,9 +192,6 @@ def rkbs32(t, x, h, f, atol = None, rtol = None):
    sc = atol + np.maximum(np.abs(x_2), np.abs(x_3)) * rtol
    err = np.amax(np.sqrt((x_2-x_3)**2)/sc)
 
-   # Safety factor for timestep correction
-   fac = 0.8
-   maxfac = 2
    if err <= 1.:
        # Step is accepted, use third order result as next position
        _x = x_3
@@ -1384,7 +1379,7 @@ def rkhe21(t, x, h, f, atol = None, rtol = None):
    c2 = 1.
 
    # Matrix elements
-   a11 = 1.
+   a21 = 1.
 
    # First-order weights:
    b11 = 1.
@@ -1402,7 +1397,7 @@ def rkhe21(t, x, h, f, atol = None, rtol = None):
    x_1 = x + h*(b11*k1 + b12*k2)
    x_2 = x + h*(b21*k1 + b22*k2)
 
-      # Implementing error check and variable stepsize roughly as in
+   # Implementing error check and variable stepsize roughly as in
    # Hairer, Nørsett and Wanner: "Solving ordinary differential
    #                              equations I -- Nonstiff problems",
    #                              pages 167 and 168 in the 2008 ed.
