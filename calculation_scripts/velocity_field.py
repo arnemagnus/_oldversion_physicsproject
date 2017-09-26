@@ -1,5 +1,3 @@
-# -*- coding=utf-8 -*-
-
 # This file contains all the necessary function definitions for
 # the implementation of the velocity field. My intention is for
 # this file to be imported into other plot-generating and
@@ -21,8 +19,6 @@
 # physics at NTNU, fall 2017
 
 #--------------------------------------------------------------------#
-
-from __future__ import division
 
 # Seeing as the analytical velocity field in question involves
 # the sine and cosine functions, as well as pi, we require a

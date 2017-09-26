@@ -1,5 +1,3 @@
-from __future__ import division
-
 from numerical_integrators.adaptive_step import *
 
 import numpy as np

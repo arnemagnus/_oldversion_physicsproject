@@ -1,5 +1,3 @@
-# -*- coding=utf-8 -*-
-
 # Changelog:
 #     2017-08-30: File created. Calculation not yet fully implemented.
 #
@@ -40,9 +38,6 @@
 # physics at NTNU, fall 2017.
 
 #---------------------------------------------------------------------#
-
-# from __future__ import division
-from __future__ import print_function
 
 # First of all, I import the function definition for the velocity
 # field, and the numerical integrator.

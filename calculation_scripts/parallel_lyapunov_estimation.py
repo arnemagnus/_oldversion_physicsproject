@@ -1,5 +1,3 @@
-# -*- coding=utf-8 -*-
-from __future__ import division
 def simulation(N):
 
 
@@ -101,12 +99,12 @@ def simulation(N):
 
     part_x = np.floor(Nx/N).astype(int)
 
-    for j in xrange(N):
+    for j in range(N):
         print(j*part_x, Nx if j + 1 == N else (j + 1)*part_x - 1)
 
-    for i in xrange(n_snaps):
+    for i in range(n_snaps):
 
-        queuelist = [mp.Queue() for j in xrange(N)]
+        queuelist = [mp.Queue() for j in range(N)]
         processlist = [mp.Process(target = simulate_all_the_way,
                                   args = (t_min + i * t_incr,
                                           t_min + (i+1)*t_incr,
@@ -115,13 +113,13 @@ def simulation(N):
                                           h,
                                           vel,
                                           integrator,
-                                          queuelist[j])) for j in xrange(N)]
+                                          queuelist[j])) for j in range(N)]
 
         for process in processlist:
             process.start()
 
 
-        for j in xrange(N):
+        for j in range(N):
             xy[j*part_x:Nx if j + 1 == N else (j + 1)*part_x,:], yx[j*part_x:Nx if j + 1 == N else (j + 1)*part_x,:] = queuelist[j].get()
 
         for process in processlist:
