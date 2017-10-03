@@ -10,6 +10,12 @@
 % Bedre A4-formatering:
 \usepackage[big]{layaureo}
 
+% Tykkere linjer i tabeller
+\usepackage[]{booktabs}
+
+% Smartere plassering av floats 
+\usepackage[]{float}
+
 % Oppsett av hyperref-pakken
 \usepackage{hyperref}
 \definecolor{linkcolour}{rgb}{0,0.2,0.6}
@@ -99,13 +105,13 @@
 % OBS: Husk å oppdatere antallet inputfiler før kompilering for 
 % å få med alle journalføringene: 
 
-\foreach \c in {1, ..., 2} {\input{entries/entry\c.tex}}
+\foreach \c in {1, ..., 3} {\input{entries/entry\c.tex}}
   
 %------------------------------BACKMATTER-----------------------------%
 \bigskip
 
 \bibliographystyle{apalike}
-\bibliography{mybibliography}
+\bibliography{../bibliography/references.bib}
 
 \end{document}
 
