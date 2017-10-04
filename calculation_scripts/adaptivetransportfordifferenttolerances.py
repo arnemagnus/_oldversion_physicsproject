@@ -1,5 +1,4 @@
-from numerical_integrators.single_step import *
-from numerical_integrators.adaptive_step import *
+from numerical_integrators.adaptive_step import rkbs32, rkbs54, rkck45, rkdp54, rkdp87, rkf12, rkf45, rkhe21
 
 import multiprocessing as mp
 
@@ -52,6 +51,7 @@ part = np.floor((Nx*Ny)/N).astype(int)
 for integrator in integrators:
 
     for i in range(len(tol)):
+        print('{}: {} of {}'.format(integrator.__name__, i, len(tol)))
         pos = np.copy(initpos)
         ts = np.ones(Nx*Ny)*t_min
         hs = np.ones(Nx*Ny)*0.01
