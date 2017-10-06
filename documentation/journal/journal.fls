@@ -486,6 +486,7 @@ INPUT ./journal.bbl
 INPUT ./journal.aux
 INPUT ./journal.out
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txex-bar.pfb

@@ -1,12 +1,13 @@
 # Fdb version 3
-["bibtex journal"] 1507026024 "journal.aux" "journal.bbl" "journal" 1507026028
+["bibtex journal"] 1507292377 "journal.aux" "journal.bbl" "journal" 1507293274
   "../bibliography/references.bib" 1507025127 9918 9bcc1db751bc47956b30e7718c969c1e ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "journal.aux" 1507026028 5810 f14ce2769786fd1acf4388305d9bb544 ""
+  "journal.aux" 1507293273 6178 ec50be2e9067c53e0f5005b1e1af5b1b ""
   "journal.bcf" 0 -1 0 ""
   (generated)
   "journal.bbl"
-["pdflatex"] 1507026024 "journal.tex" "journal.pdf" "journal" 1507026028
+  "journal.blg"
+["pdflatex"] 1507293272 "journal.tex" "journal.pdf" "journal" 1507293274
   "/home/arne/.texmf-var/luatex-cache/generic/fonts/otf/lmroman10-regular.luc" 1506504948 108544 5390425c27d6553ef2a5f29168e0dcca ""
   "/home/arne/.texmf-var/luatex-cache/generic/fonts/otf/lmroman12-bold.luc" 1506504949 109317 b3d614fc6e413388a1c4bc50e63a1cf2 ""
   "/home/arne/.texmf-var/luatex-cache/generic/fonts/otf/lmroman12-italic.luc" 1506504949 116088 6ab18360522e33b66bbd9477a608de6b ""
@@ -84,6 +85,7 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/txfonts/txsyb.tfm" 1136768653 988 098ca7e8cc5647b9ac21b82dbdce1f01 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/txfonts/txsyc.tfm" 1136768653 1084 75e807e9e71f7a312e4e1187dce5e93b ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1248133631 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txex-bar.pfb" 1429483059 12481 37b0d19258b2957d37d56dd8d1046351 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/newtx/zxlri.pfb" 1349738421 40018 c95c54283f707f43b97d683263608fce ""
@@ -261,16 +263,18 @@
   "/usr/share/texmf/tex/latex/tipa/t3cmr.fd" 1414244106 1257 fd5b1c2f0106f9cf12cdb2ff961987c5 ""
   "/usr/share/texmf/tex/latex/tipa/t3enc.def" 1414244106 26483 c461a68c34040cb0d96c43e86c012a6d ""
   "/var/lib/texmf/web2c/luatex/lualatex.fmt" 1506458358 1294013 338eebe3eee18b8e2a1b5c486d5ac919 ""
-  "entries/entry1.tex" 1506461528 7897 baabb8b30fa0a47d4b842961af61f965 ""
-  "entries/entry2.tex" 1506505988 671 005b8a0eb117731e0cbde3ec5653a648 ""
-  "entries/entry3.tex" 1507026019 2269 9c4c6ca328c6e0fe52f9be6cae4287ca ""
-  "journal.aux" 1507026028 5810 f14ce2769786fd1acf4388305d9bb544 ""
-  "journal.bbl" 1507026024 857 4f79117ac8e4f02d73d39ba188a3024a "bibtex journal"
-  "journal.out" 1507026028 526 a80fcead9c51cafa4a369501c9d7aa93 ""
+  "entries/entry1.tex" 1507292847 7887 30f538c73f3b48ae565ed1aeff09f667 ""
+  "entries/entry2.tex" 1507293270 895 e18389cd1d57c58cf516b8acfbcec599 ""
+  "entries/entry3.tex" 1507292472 3168 4eea18e02ec370c56e1a22bda13f4289 ""
+  "journal.aux" 1507293273 6178 ec50be2e9067c53e0f5005b1e1af5b1b ""
+  "journal.bbl" 1507292377 857 4f79117ac8e4f02d73d39ba188a3024a "bibtex journal"
+  "journal.out" 1507293273 526 a80fcead9c51cafa4a369501c9d7aa93 ""
   "journal.tex" 1507025321 3575 5e4cda4aad68e449634b1feaedef64b8 ""
   (generated)
-  "/home/arne/.texmf-var/m_t_x_t_e_s_t.tmp"
   "journal.pdf"
+  "/home/arne/.texmf-var/luatex-cache/generic/fonts/otf/lmroman6-regular.lua"
   "journal.out"
+  "/home/arne/.texmf-var/luatex-cache/generic/fonts/otf/lmroman6-regular.luc"
+  "/home/arne/.texmf-var/m_t_x_t_e_s_t.tmp"
   "journal.aux"
   "journal.log"

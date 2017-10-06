@@ -6,18 +6,18 @@
 \section{Weeks 38--39}
 
 \begin{table}[h]
-  \caption{General Butcher Tableau representation for Runge-Kutta methods}
-  \label{tab:general_butcher_tableau}
-  \centering
-  \begin{tabular}{c|ccccc}
-    0 \\
-      $c_{2}$ & $a_{21}$ \\
-      $c_{3}$ & $a_{31}$ & $a_{32}$ \\
-      $\vdots$ & $\vdots$ & & $\ddots$ \\
-      $c_{s}$ & $a_{s1}$ & $a_{s2}$ & $\ldots$ & $a_{s,s-1}$ \\
-    \hline
-    & $b_{1}$ & $b_{2}$ & $\ldots$ & $b_{s-1}$ & $b_{s}$
-  \end{tabular}
+    \caption{General Butcher Tableau representation for Runge-Kutta methods}
+    \label{tab:general_butcher_tableau}
+    \centering
+    \begin{tabular}{c|ccccc}
+        0 \\
+        $c_{\scriptscriptstyle 2}$ & $a_{\scriptscriptstyle 21}$ \\
+        $c_{\scriptscriptstyle 3}$ & $a_{\scriptscriptstyle 31}$ & $a_{\scriptscriptstyle 32}$ \\
+        $\vdots$ & $\vdots$ & & $\ddots$ \\
+        $c_{s}$ & $a_{s1}$ & $a_{s \scriptscriptstyle 2}$ & $\ldots$ & $a_{s,s \scriptscriptstyle -1}$ \\
+        \hline
+        & $b_{\scriptscriptstyle 1}$ & $b_{\scriptscriptstyle 2}$ & $\ldots$ & $b_{s \scriptscriptstyle{-1}}$ & $b_{s}$
+    \end{tabular}
 \end{table}
 
 %%% Local Variables:
