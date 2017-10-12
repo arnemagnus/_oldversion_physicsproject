@@ -14,14 +14,14 @@
 #                 to the blacklist
 
 # Python temporary files
-*/__pycache__/*
+__pycache__/
 *.pyc
 
 # Minted temporary files
-*/_minted*/*
+_minted*/
 
 # Jupyter Notebook checkpoints
-*/.ipynb_checkpoints/
+.ipynb_checkpoints/
 
 # Emacs temporary / auxillary files
 *~

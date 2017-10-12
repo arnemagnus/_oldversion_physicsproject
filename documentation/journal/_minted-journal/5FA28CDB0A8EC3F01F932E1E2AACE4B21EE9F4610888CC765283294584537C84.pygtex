@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-    \PYG{n}{z2} \PYG{o}{=} \PYG{n}{spline}\PYG{o}{.}\PYG{n}{ev}\PYG{p}{(}\PYG{n}{x2}\PYG{p}{,} \PYG{n}{y2}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} \PYGZlt{}\PYGZhy{}\PYGZhy{} Incorrect}
-\end{Verbatim}
