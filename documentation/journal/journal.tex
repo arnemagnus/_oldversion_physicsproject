@@ -40,8 +40,16 @@
 % Bruk endash heller enn "to~" i en cleveref-range (crefrange{})
 \newcommand{\crefrangeconjunction}{--}
 
-% Smart syntakshighlighting for ymse programmeringsspråk 
-\usepackage[]{minted}
+% Smart syntakshighlighting for ymse programmeringsspråk.
+% Newfloat muliggjør captions og referanser til kodesnuttene
+\usepackage[newfloat]{minted}
+
+% Smartere captions 
+\usepackage[]{caption}
+
+
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name = Source Code}
 
 
 %--------------------------------------------------%
