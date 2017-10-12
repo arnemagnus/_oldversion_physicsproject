@@ -18,7 +18,7 @@
 *.pyc
 
 # Minted temporary files
-*/_minted-journal/*
+*/_minted*/*
 
 # Jupyter Notebook checkpoints
 */.ipynb_checkpoints/
@@ -31,12 +31,16 @@
 *.swp
 *.swo
 
-# LaTeX auxillary files
+# LaTeX auxiliary files
 *.log
 *.aux
 *.bbl
 *.blg
 *.out
+
+# Latexmk auxiliary files
+*.fdb_latexmk
+*.fls
 
 # Emacs LaTeX preview folder
 */_region_.prv/
