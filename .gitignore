@@ -17,6 +17,11 @@
 __pycache__/
 *.pyc
 
+# Minted temporary files
+_minted-journal/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
 
 # Emacs temporary / auxillary files
 *~
