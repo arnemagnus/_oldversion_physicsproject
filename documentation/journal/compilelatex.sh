@@ -1,1 +1,1 @@
-latexmk -lualatex -pvc -use-make journal
+latexmk -lualatex -shell-escape -pvc -use-make journal

@@ -39,6 +39,11 @@
 
 % Bruk endash heller enn "to~" i en cleveref-range (crefrange{})
 \newcommand{\crefrangeconjunction}{--}
+
+% Smart syntakshighlighting for ymse programmeringsspråk 
+\usepackage[]{minted}
+
+
 %--------------------------------------------------%
 % Matematiske funksjoner, og egendefinerte makroer %
 % -------------------------------------------------%
@@ -105,7 +110,7 @@
 % OBS: Husk å oppdatere antallet inputfiler før kompilering for 
 % å få med alle journalføringene: 
 
-\foreach \c in {1, ..., 3} {\input{entries/entry\c.tex}}
+\foreach \c in {1, ..., 4} {\input{entries/entry\c.tex}}
   
 %------------------------------BACKMATTER-----------------------------%
 \bigskip

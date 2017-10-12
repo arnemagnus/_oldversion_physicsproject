@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{spline} \PYG{o}{=} \PYG{n}{RBSpline}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{z}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} \PYGZlt{}\PYGZhy{}\PYGZhy{} Incorrect}
+\end{Verbatim}
