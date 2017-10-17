@@ -41,6 +41,8 @@ _minted*/
 # Latexmk auxiliary files
 *.fdb_latexmk
 *.fls
+*.bcf
+*.run.xml
 
 # Emacs LaTeX preview folder
 */_region_.prv/
