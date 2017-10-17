@@ -15,8 +15,8 @@ complex and less comprehensible code it requires.
 \begin{table}[H]
     \centering
     \caption{Butcher tableau for the Dormand-Prince 5(4) adaptive timestep integrator.
-        The first row of $b$-coefficients yield the $5^{\mathrm{th}}$ order solution, 
-    while the second row yields the $4^{\mathrm{th}}$ order interpolant. See~\cite{prince1981highorder}.}
+        The first row of $b$-coefficients yield the \nth{5} order solution, 
+    while the second row yields the \nth{4} order interpolant. See~\textcite{prince1981highorder}.}
     \label{tab:bucherdopri54}
     \(\renewcommand{\arraystretch}{2.5}
     \begin{array}{c|ccccccc}
@@ -64,10 +64,3 @@ Second order backward difference approximation of second derivative:
     \label{eq:secondorderbackwarddifferencesecondderivative}
     \dv[2]{f(x)}{x} \approx \frac{2f(x) - 5f(x-h) + 4f(x-2h) - f(x-3h)}{h^{2}} 
 \end{equation}
-
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../journal"
-%%% TeX-engine: luatex
-%%% End:

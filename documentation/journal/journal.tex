@@ -20,10 +20,52 @@
 \usepackage{hyperref}
 \definecolor{linkcolour}{rgb}{0,0.2,0.6}
 \hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,
-  linkcolor=linkcolour}
+linkcolor=linkcolour}
 
-% Runde sitatparenteser med \citep
-\usepackage[round]{natbib}
+\usepackage[backend=biber,style=authoryear,language=british,dashed=false,url=false,doi=false]{biblatex}
+\DeclareNameAlias{sortname}{last-first}
+
+\bibliography{../bibliography/references.bib}
+
+% Koden herfra og ned til usepackage tikz sikrer at hele sitatboksen i biblatex-
+% sitater blir del av hyperlenken, snarere enn kunn årstallet:
+\DeclareFieldFormat{citehyperref}{%
+    \DeclareFieldAlias{bibhyperref}{noformat}% Avoid nested links
+\bibhyperref{#1}}
+
+\DeclareFieldFormat{textcitehyperref}{%
+    \DeclareFieldAlias{bibhyperref}{noformat}% Avoid nested links
+    \bibhyperref{%
+        #1%
+        \ifbool{cbx:parens}
+        {\bibcloseparen\global\boolfalse{cbx:parens}}
+{}}}
+
+
+\savebibmacro{cite}
+\savebibmacro{textcite}
+
+\renewbibmacro*{cite}{%
+    \printtext[citehyperref]{%
+        \restorebibmacro{cite}%
+\usebibmacro{cite}}}
+
+\renewbibmacro*{textcite}{%
+    \ifboolexpr{
+        ( not test {\iffieldundef{prenote}} and
+        test {\ifnumequal{\value{citecount}}{1}} )
+        or
+        ( not test {\iffieldundef{postnote}} and
+        test {\ifnumequal{\value{citecount}}{\value{citetotal}}} )
+    }
+    {\DeclareFieldAlias{textcitehyperref}{noformat}}
+    {}%
+    \printtext[textcitehyperref]{%
+        \restorebibmacro{textcite}%
+\usebibmacro{textcite}}}
+
+%% Runde sitatparenteser med \citep
+%\usepackage[round]{natbib}
 
 % For å bl.a. kunne loope over filnavn:
 \usepackage{tikz}
@@ -51,6 +93,17 @@
 \newenvironment{code}{\captionsetup{type=listing}}{}
 \SetupFloatingEnvironment{listing}{name = Source Code}
 
+% Enkel syntaks for superskript 2nd, 3rd osv: \nth{i} 
+\usepackage[super]{nth}
+
+% Tilgang til \newcolumn-kommandoen 
+\usepackage[]{array}
+
+\newcolumntype{C}{>$c<$} % Math mode versjon av "c" kolonnetype
+
+% Roter tabeller osv 
+\usepackage{rotating}
+
 
 %--------------------------------------------------%
 % Matematiske funksjoner, og egendefinerte makroer %
@@ -75,14 +128,14 @@
 
 \makeatletter
 \def\changegreek{\@for\next:={%
-  alpha,beta,gamma,delta,epsilon,zeta,eta,theta,kappa,lambda,mu,nu,xi,pi,rho,sigma,%
-  tau,upsilon,phi,chi,psi,omega,varepsilon,vartheta,varpi,varrho,varsigma,varphi}%
-  \do{\expandafter\let\csname\next\expandafter\endcsname\csname\next up\endcsname}}
+        alpha,beta,gamma,delta,epsilon,zeta,eta,theta,kappa,lambda,mu,nu,xi,pi,rho,sigma,%
+    tau,upsilon,phi,chi,psi,omega,varepsilon,vartheta,varpi,varrho,varsigma,varphi}%
+\do{\expandafter\let\csname\next\expandafter\endcsname\csname\next up\endcsname}}
 \def\changegreekbf{\@for\next:={%
-  alpha,beta,gamma,delta,epsilon,zeta,eta,theta,kappa,lambda,mu,nu,xi,pi,rho,sigma,%
-  tau,upsilon,phi,chi,psi,omega,varepsilon,vartheta,varpi,varrho,varsigma,varphi}%
-  \do{\expandafter\def\csname\next\expandafter\endcsname\expandafter{%
-    \expandafter\bm\expandafter{\csname\next up\endcsname}}}}
+        alpha,beta,gamma,delta,epsilon,zeta,eta,theta,kappa,lambda,mu,nu,xi,pi,rho,sigma,%
+    tau,upsilon,phi,chi,psi,omega,varepsilon,vartheta,varpi,varrho,varsigma,varphi}%
+    \do{\expandafter\def\csname\next\expandafter\endcsname\expandafter{%
+\expandafter\bm\expandafter{\csname\next up\endcsname}}}}
 \makeatother
 
 % Definer vektorer i bold, roman
@@ -104,11 +157,11 @@
 
 \par{\centering
     {\LARGE TFY4510 \textsc{Specialization Project in Physics}
-    }\medskip\par}
+}\medskip\par}
 
 \par{\centering
     {\large Journal for Arne Magnus Tveita Løken, fall 2017
-    }\bigskip\par}
+}\bigskip\par}
 
 %----------------------------MAIN CONTENT-----------------------------%
 
@@ -118,19 +171,13 @@
 % OBS: Husk å oppdatere antallet inputfiler før kompilering for 
 % å få med alle journalføringene: 
 
-\foreach \c in {1, ..., 4} {\input{entries/entry\c.tex}}
-  
+\foreach \c in {1, ..., 5} {\input{entries/entry\c.tex}}
+
 %------------------------------BACKMATTER-----------------------------%
 \bigskip
 
-\bibliographystyle{apalike}
-\bibliography{../bibliography/references.bib}
+%\bibliographystyle{apalike}
+%\bibliography{../bibliography/references.bib}
 
+\printbibliography
 \end{document}
-
-
-% Local Variables:
-% TeX-engine: luatex
-% TeX-master: t
-% End:
-
