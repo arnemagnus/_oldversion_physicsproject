@@ -25,7 +25,11 @@ linkcolor=linkcolour}
 \usepackage[backend=biber,style=authoryear,language=british,dashed=false,url=false,doi=false]{biblatex}
 \DeclareNameAlias{sortname}{last-first}
 
-\bibliography{../bibliography/references.bib}
+\addbibresource{../bibliography/references.bib}
+
+%\let\oldbibliography\thebibliography
+%\renewcommand{\thebibliography}[1]{\oldbibliography{#1}
+%\setlength{\itemsep}{2pt}}
 
 % Koden herfra og ned til usepackage tikz sikrer at hele sitatboksen i biblatex-
 % sitater blir del av hyperlenken, snarere enn kunn årstallet:
@@ -179,5 +183,8 @@ linkcolor=linkcolour}
 %\bibliographystyle{apalike}
 %\bibliography{../bibliography/references.bib}
 
+\begingroup
+\setlength\bibitemsep{5pt}
 \printbibliography
+\endgroup
 \end{document}
