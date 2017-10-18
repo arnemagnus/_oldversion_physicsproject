@@ -1555,7 +1555,7 @@ def rkf78(t, x, h, f, atol = None, rtol = None, **kwargs):
     c2  = 2./27.
     c3  = 1./9.
     c4  = 1./6.
-    c5  = 5./12
+    c5  = 5./12.
     c6  = 1./2.
     c7  = 5./6.
     c8  = 1./6.
@@ -1676,45 +1676,57 @@ def rkf78(t, x, h, f, atol = None, rtol = None, **kwargs):
     b813 = 41./840.
 
     # Find "slopes"
-    k1  = f(t         , x                                            , **kwargs)
-    k2  = f(t +  c2*h , x +  a21*h*k1                                , **kwargs)
-    k3  = f(t +  c3*h , x +  a31*h*k1 +  a32*h*k2                    , **kwargs)
-    k4  = f(t +  c4*h , x +  a41*h*k1 +  a42*h*k2 +  a43*h*k3        , **kwargs)
-    k5  = f(t +  c5*h , x +  a51*h*k1 +  a52*h*k2 +  a53*h*k3
-                          +  a54*h*k4                                , **kwargs)
-    k6  = f(t +  c6*h , x +  a61*h*k1 +  a62*h*k2 +  a63*h*k3
-                          +  a64*h*k4 +  a65*h*k5                    , **kwargs)
-    k7  = f(t +  c7*h , x +  a71*h*k1 +  a72*h*k2 +  a73*h*k3
-                          +  a74*h*k4 +  a75*h*k5 +  a76*h*k6        , **kwargs)
-    k8  = f(t +  c8*h , x +  a81*h*k1 +  a82*h*k2 +  a83*h*k3
-                        +  a84*h*k4 +  a85*h*k5 +  a86*h*k6
-                           +  a87*h*k7                               , **kwargs)
-    k9  = f(t +  c9*h , x +  a91*h*k1 +  a92*h*k2 +  a93*h*k3
-                        +  a94*h*k4  +  a95*h*k5 +  a96*h*k6
-                           +  a97*h*k7 +  a98*h*k8                   , **kwargs)
-    k10 = f(t + c10*h, x + a101*h*k1 + a102*h*k2 + a103*h*k3
-                        + a104*h*k4 + a105*h*k5 + a106*h*k6
-                           + a107*h*k7 + a108*h*k8 + a109*h*k9       , **kwargs)
-    k11 = f(t + c11*h, x + a111*h*k1 + a112*h*k2 + a113*h*k3
-                        + a114*h*k4 + a115*h*k5 + a116*h*k6
-                        + a117*h*k7 + a118*h*k8 + a119*h*k9
-                            + a1110*h*k10                            , **kwargs)
-    k12 = f(t + c12*h, x + a121*h*k1 + a122*h*k2 + a123*h*k3
-                        + a124*h*k4 + a125*h*k5 + a126*h*k6
-                        + a127*h*k7 + a128*h*k8 + a129*h*k9
-                            + a1210*h*k10 + a1211*h*k11              , **kwargs)
-    k13 = f(t + c13*h, x + a131*h*k1 + a132*h*k2 + a133*h*k3
-                            + a134*h*k4 + a135*h*k5 + a136*h*k6
-                            + a137*h*k7 + a138*h*k8 + a139*h*k9
-                            + a1310*h*k10 + a1311*h*k11 + a1312*h*k12, **kwargs)
+    k1  = f(t        , x                                            , **kwargs)
+
+    k2  = f(t +  c2*h, x +    a21*h*k1                              , **kwargs)
+
+    k3  = f(t +  c3*h, x +    a31*h*k1 +  a32*h*k2                  , **kwargs)
+
+    k4  = f(t +  c4*h, x +    a41*h*k1 +  a42*h*k2 +  a43*h*k3      , **kwargs)
+
+    k5  = f(t +  c5*h, x +    a51*h*k1 +  a52*h*k2 +  a53*h*k3
+                         +    a54*h*k4                              , **kwargs)
+
+    k6  = f(t +  c6*h, x +    a61*h*k1 +  a62*h*k2 +  a63*h*k3
+                         +    a64*h*k4 +  a65*h*k5                  , **kwargs)
+
+    k7  = f(t +  c7*h, x +    a71*h*k1 +  a72*h*k2 +  a73*h*k3
+                         +    a74*h*k4 +  a75*h*k5 +  a76*h*k6      , **kwargs)
+
+    k8  = f(t +  c8*h, x +    a81*h*k1 +  a82*h*k2 +  a83*h*k3
+                         +    a84*h*k4 +  a85*h*k5 +  a86*h*k6
+                         +    a87*h*k7                              , **kwargs)
+
+    k9  = f(t +  c9*h, x +    a91*h*k1 +  a92*h*k2 +  a93*h*k3
+                         +    a94*h*k4 +  a95*h*k5 +  a96*h*k6
+                         +    a97*h*k7 +  a98*h*k8                  , **kwargs)
+
+    k10 = f(t + c10*h, x +   a101*h*k1 + a102*h*k2 + a103*h*k3
+                         +   a104*h*k4 + a105*h*k5 + a106*h*k6
+                         +   a107*h*k7 + a108*h*k8 + a109*h*k9      , **kwargs)
+
+    k11 = f(t + c11*h, x +   a111*h*k1 + a112*h*k2 + a113*h*k3
+                         +   a114*h*k4 + a115*h*k5 + a116*h*k6
+                         +   a117*h*k7 + a118*h*k8 + a119*h*k9
+                         + a1110*h*k10                              , **kwargs)
+
+    k12 = f(t + c12*h, x +   a121*h*k1 +   a122*h*k2 + a123*h*k3
+                         +   a124*h*k4 +   a125*h*k5 + a126*h*k6
+                         +   a127*h*k7 +   a128*h*k8 + a129*h*k9
+                         + a1210*h*k10 + a1211*h*k11                , **kwargs)
+
+    k13 = f(t + c13*h, x +   a131*h*k1 +   a132*h*k2 +   a133*h*k3
+                         +   a134*h*k4 +   a135*h*k5 +   a136*h*k6
+                         +   a137*h*k7 +   a138*h*k8 +   a139*h*k9
+                         + a1310*h*k10 + a1311*h*k11 + a1312*h*k12  , **kwargs)
 
     # Find seventh and eighth order prediction of new point
-    x_7 = x + h*( b71*k1 +  b72*k2 +  b73*k3 +  b74*k4 +  b75*k5
-            +  b76*k6 +  b77*k7 +  b78*k8 +  b79*k9
-            + b710*k10 + b711*k11 + b712*k12 + b713*k13  )
-    x_8 = x + h*( b81*k1 +  b82*k2 +  b83*k3 +  b84*k4 +  b85*k5
-            +  b86*k6 +  b87*k7 +  b88*k8 +  b89*k9
-            + b810*k10 + b811*k11 + b812*k12 + b813*k13  )
+    x_7 = x + h*( b71*k1 +   b72*k2 +   b73*k3 +   b74*k4 +   b75*k5
+              +   b76*k6 +   b77*k7 +   b78*k8 +   b79*k9
+              + b710*k10 + b711*k11 + b712*k12 + b713*k13  )
+    x_8 = x + h*( b81*k1 +   b82*k2 +   b83*k3 +   b84*k4 +   b85*k5
+             +   b86*k6  +   b87*k7 +   b88*k8 +   b89*k9
+             + b810*k10  + b811*k11 + b812*k12 + b813*k13  )
 
     # Implementing error check and variable stepsize roughly as in
     # Hairer, Nørsett and Wanner: "Solving ordinary differential

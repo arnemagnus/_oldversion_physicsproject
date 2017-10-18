@@ -7,19 +7,19 @@ from numerical_integrators.adaptive_step import rkbs32, rkbs54, rkck45, rkdp54,\
 import sys
 
 def transport(chosen_integrator, n_proc):
-    if chosen_integrator == 'euler':
+    if chosen_integrator == 'e':
         integrator = euler
         h = np.logspace(-5, 0, 12)
         evals_step = 1
-    elif chosen_integrator == 'rk2':
+    elif chosen_integrator == 'h':
         integrator = rk2
         h = np.logspace(-5, 0, 12)
         evals_step = 2
-    elif chosen_integrator == 'rk3':
+    elif chosen_integrator == 'k':
         integrator = rk3
         h = np.logspace(-5, 0, 12)
         evals_step = 3
-    elif chosen_integrator == 'rk4':
+    elif chosen_integrator == 'r':
         integrator = rk4
         h = np.logspace(-5, 0, 12)
         evals_step = 4
@@ -42,6 +42,10 @@ def transport(chosen_integrator, n_proc):
     elif chosen_integrator == 'rkdp87':
         integrator = rkdp87
         tols = np.logspace(-10, 0, 15)
+        np.save('runs/tolerances_adaptive.npy', tols)
+        tols = np.array([1e-12])
+        z = np.logspace(-5, 0, 12)
+        np.save('runs/steplengths_single.npy', z)
         evals_step = 13
     elif chosen_integrator == 'rkf45':
         integrator = rkf45
@@ -104,7 +108,7 @@ def transport(chosen_integrator, n_proc):
                 process.join()
 
             np.save('runs/endpos_{}_h={}.npy'.format(integrator.__name__, h[i]), pos)
-            np.save('runs/evaluations_{}_h={}.npy'.format(integrator.__name__, h[j]), steps)
+            np.save('runs/evaluations_{}_h={}.npy'.format(integrator.__name__, h[i]), steps)
 
     else:
         for i in range(np.size(tols)):
@@ -165,7 +169,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=('Input arguments to the\
                                                     transport function.'))
 
-    parser.add_argument('-method', type=str, default = 'euler', help = 'Chosen integrator')
-    parser.add_argument('-n_proc', type=int, default = 1, help = 'No. Proc.')
+    parser.add_argument('-m', type=str, help = 'Chosen integrator')
+    parser.add_argument('-n', type=int, default = 1, help = 'No. Proc.')
     args = parser.parse_args()
-    transport(chosen_integrator = args.method, n_proc = args.n_proc)
+    transport(chosen_integrator = args.m, n_proc = args.n)
